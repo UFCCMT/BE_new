@@ -1,0 +1,39 @@
+-- Nalini Kumar
+-- Ajay 
+-- To do: Add requirements for all the test cases!
+
+BE-SST tests:
+
+1. One ArchBEO component - single computation, no Monte-Carlo
+    - check for basic correctness
+2. One ArchBEO component - single computation, with Monte-Carlo
+    - check for basic Monte Carlo correctness
+3. One ArchBEO component - series of computations, no Monte-Carlo
+    - Check advancement of simulation time
+4. One ArchBEO component - series of computations, with Monte-Carlo
+    - Check addition of distributions
+5. Multiple ArchBEO component - series of computations, no Monte-Carlo
+    - Check advancement of simulation time across multiple BEO objects
+6. Send-Recv (Blocking send and blocking recv)
+    - neighbor (1 hop)
+    - end of row/column (longest distance along any one dimension)
+    - end of row/column (longest distance along all dimension)
+    - longest path in the system (id0 to idN-1)
+    - Check using simulated time & simulation trace
+7. Send-Recv (Non-blocking send and blocking recv)
+    - neighbor (1 hop)
+    - end of row/column (longest distance along any one dimension)
+    - end of row/column (longest distance along all dimension)
+    - longest path in the system (id0 to idN-1)
+    - Check using simulated time & simulation trace
+8. Send-Recv (Non-blocking send and non-blocking recv) - FUTURE
+    - neighbor (1 hop)
+    - end of row/column (longest distance along any one dimension)
+    - end of row/column (longest distance along all dimension)
+    - longest path in the system (id0 to idN-1)
+    - Check using simulated time & simulation trace
+9. Broadcast - one sends to all (tree broadcast)
+10. Scatter - one sends pieces to all (naive scatter)
+11. Gather - one collects pieces from all (naive gather)
+12. Allreduce - collect from all & add (naive)
+13. Barrier - ring/chain barrier

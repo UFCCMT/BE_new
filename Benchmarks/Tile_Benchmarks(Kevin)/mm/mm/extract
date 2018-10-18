@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+  tile-monitor \
+  --dev usb0 \
+  --resume \
+
+  --cd /tmp/cheng \
+  --ls -l \
+  --cd data
+  --ls -l
+  --quit
+  
+  
+
+
+
+
+
+
+

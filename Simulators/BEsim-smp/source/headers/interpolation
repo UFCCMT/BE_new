@@ -1,0 +1,30 @@
+/*
+
+About:
+------
+Interpolation header
+
+Description:
+------------
+This file contains the declarations of prototype for the interpolation function
+
+Notes:
+------
+1) The 3 parameters into the interpolation function are general purpose. In 
+cases where its a single parameter interpolation, just use one param and ignore 
+the other 2, and everybody is happy.
+
+*/
+
+
+#ifndef __INTERPOLATION__
+  #define __INTERPOLATION__
+  
+  #include "common_definitions"
+  
+  namespace smp
+  {
+    TIME_TYPE interpolation(int,int,int); 
+  }
+  
+#endif

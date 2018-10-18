@@ -1,0 +1,192 @@
+DGEMM - Matrix-Matrix Multiplication
+	//2 matrices of size MxK and KxN multiplied
+	//to produce a matrix of size MxN
+
+	Initialize variables (runs, row1, col1, col2)
+	
+	Set variables (runs, row1, col1, col2)
+	
+	Check variable validity
+	
+	Run cblas_gemm
+		Initialize variables (row2, alpha, beta, min, max)
+		
+		Initialize pointers (A, B, C)
+		
+		MALLOC (A, B)
+		
+		CALLOC (C)
+		
+		Null Check (A, B, C)
+		
+		Rand_Init (A, row1*col1)
+		
+		Rand_Init (B, row2*col2)
+			
+		FORLOOP (runs)
+			//Avoid compiling out
+			Rand_Init (A & B, 1)
+			
+			CBLAS_DGEMM
+			
+		Free memory (matrix A, B, C)
+	END
+	
+	
+DSCAL - Scalar Multiplication
+	//1 Vector multiplied by a scalar value
+
+	Initialize variables (runs, size)
+
+	Set variables (runs, size)
+	
+	Check variable validity
+	
+	Run cblas_dscal
+		Initialize variables (alpha, min, max, incX)
+		
+		Initialize pointers (A)
+		
+		MALLOC (A)
+		
+		Null Check (A)
+		
+		Rand_Init (A, size)
+		
+		FORLOOP (runs)
+			Generate random scaling factor (alpha)
+			
+			CBLAS_DSCAL
+		
+		Free memory (A)
+	END
+	
+
+DDOT - Dot Product
+	//Matrix * Vector
+
+	Initialize variables (runs, rows, cols)
+
+	Set variables (runs, rows, cols)
+	
+	Check variable validity
+
+	Run cblas_ddot
+		Initialize variables (incX, incY)
+
+		Initialize pointers (A, B, C)
+
+		MALLOC (A, B)
+		
+		CALLOC (C)
+		
+		Null Check (A, B, C)
+
+		Rand_Init (A, row*col)
+		
+		Rand_Init (B, row)
+		
+		FORLOOP(runs)
+			//avoid compiling out
+			Rand_Init (A & B, 1)
+			
+			FORLOOP(rows)
+				CBLAS_DDOT
+
+		Free memory (A, B, C)
+
+	END
+
+
+DSYMM - Matrix-Matrix Multiplication
+	//2 random matrices of size ldaxm and ldbxn
+	//Multiplies them to produce matrix of size ldcxn
+
+	Initialize variables (runs, m, n)
+
+	Set variables (runs, m, n)
+	
+	Check variable validity
+
+	Run cblas_dsymm
+		Initialize variables (lda, ldb, ldc, alpha, beta)
+
+		Initialize pointers (A, B, C)
+
+		MALLOC (A, B)
+		
+		CALLOC (C)
+		
+		Null check (A, B, C)
+
+		Rand_Init_Symm (A, lda*lda)
+		
+		Rand_Init (B, ldb*n)
+
+		FORLOOP (runs)
+			//Ensure loop isn't compiled out
+			Rand_Init (B, 1)
+
+			CBLAS_DSYMM
+
+		Free memory (A, B, C)
+
+	END
+
+
+DSYRK - Matrix-Matrix Multiplication
+	//A * A_Transpose to produce symmetric matrix C
+	//size = row*row
+
+	Initialize variables (runs, row, col)
+
+	Set variables (runs, row, col)
+
+	Run cblas_dsyrk
+		Initialize variables (lda, ldc, alpha, beta)
+
+		Initialize pointers (A, C)
+
+		Allocate memory (A, C)
+
+		Initialize variables (i)
+
+		FORLOOP (lda * n)
+			Generate random values, place in matrix A
+
+		Re-initialize variables (i)
+
+		FORLOOP (runs)
+			//Ensure loop isn't compiled out
+			Generate one random value in matrix A
+
+			CBLAS_DSYRK
+
+			PRINT_MAT
+				Initialize variables (i, j)
+
+				FORLOOP (ldc)
+					print newline
+
+					FORLOOP (n)
+						print value from matrix C
+
+			FILL_TRIANGLE_SYMM
+				Initialize variables (i, j, k)
+
+				FORLOOP (ldc)
+					FORLOOP (n)
+						*Copy value in matrix C to other location in matrix C
+
+			PRINT_MAT
+				Initialize variables (i, j)
+
+				FORLOOP (ldc)
+					print newline
+
+					FORLOOP (n)
+						print value from matrix C
+
+			Free memory (A, C)
+
+		END

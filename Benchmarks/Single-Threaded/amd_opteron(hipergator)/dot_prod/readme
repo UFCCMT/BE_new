@@ -1,0 +1,10 @@
+----------dot product (serial)----------
+-------Developed for HiperGator---------
+---------------Kevin Cheng--------------
+
+This benchmark works by submitting the python script on HiperGator, which will call the c script automatically. 
+
+1. Upload c and python folder into HiperGator in the SAME FOLDER.
+2. Navigate to the folder and make
+3. qsub dot_prod.job
+4. Outputs will be .bmark for simulator and .csv as record

@@ -1,0 +1,4 @@
+By: Kevin Cheng
+cheng@hcs.ufl.edu
+
+This version is identical to mm_udn_new except we are only timing a single element, which is total runtime. All the other gettime functions are disabled.

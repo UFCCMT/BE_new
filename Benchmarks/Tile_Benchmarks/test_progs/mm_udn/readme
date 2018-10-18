@@ -1,0 +1,28 @@
+This is matrix multiply using UDN
+------------------------------------------------
+
+
+
+Compile: type "make" to compile.
+
+Execute: type "tile-monitor --dev usb0 --resume --here --upload-tile-libs m \
+               -- ./mm_udn <matrix_size> <nthreads> <no. of iterations> <output log filename>"
+               
+               
+         Alternatively, use "./run_script <matrix_size> <no. of iterations> " to run the experiments for nthreads = 2
+         4 8 9 16 25 32 36, for a given matrix size. 
+         
+         
+Output: The logs are dumped in a logfile you provide, or in case of the automated script, in a file called "nthreads th msize.csv"
+        For axample 4 threads 1024x1024 matrix size will create a file called: 4 th 1024.csv
+        
+
+Notes:  1. The mapping between real and virtual cores is fixed. Also is the datatype (int) 
+           you have to change DATATYPE directive in source to change the datatype, 
+           and an array called the "list" to change the mapping.
+            
+        2. The logfile saves the times in every iteration for all threads, because carlo wanted to study 
+           noise in the readings. The column format is EVENT_S and EVENT_E and EVENT_D meaning start, end and 
+           difference between start and end of the particular event. Example COMPUTE_S is the time when compute starts 
+           and so on. This is logged for ALL threads. The output format is csv format
+           

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+
+CONFIG_FILE="$1";
+IT=1000;
+
+
+if [ "$CONFIG_FILE" = "" ] || [ "IT" = "" ] 
+then
+  echo -e "\nUsage: ./run_script <config_filename>\n";
+  exit 1;
+fi
+
+
+
+if ! [ -e "$CONFIG_FILE" ]
+then
+  echo -e "\nConfig file not found\n";
+  exit 1;
+fi
+
+DATASIZE=(64 128 256 512 1024);
+#DATASIZE=(256);
+
+for n in ${DATASIZE[@]}
+do
+  #tile-monitor --dev usb1 --resume --here --upload-tile-libs m -- ./sobel "$1" "$n" "$n" "$IT" "data/log_$n.csv";
+  tile-monitor \
+	--dev usb0 \
+	--resume \
+	--upload sobel /tmp/cheng/sobel_just_compute/cheng-sobel \
+	--upload $1 /tmp/cheng/sobel_just_compute/$1 \
+	--upload-tile-libs m \
+	--cd /tmp/cheng/sobel_just_compute/ \
+	--mkdir data \
+	--run -+- /tmp/cheng/sobel_just_compute/cheng-sobel "$1" "$n" "$IT" "log$n.csv" -+- \
+	--wait \
+	--download log$n.csv data/log$n.csv \
+	--quit
+  echo -e "$n done\n\n\n";
+done
+
+
+touch finished;
+
+
+
+

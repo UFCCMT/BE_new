@@ -1,0 +1,116 @@
+/*
+
+About:
+------
+
+BEO header file
+
+Description:
+-------------
+This header contains all the necessary BEO definitions:
+1) Proc BEOs
+2) The networks
+3) The worker threads
+
+Notes:
+------
+1) Heres how things are supposed to work:
+The procBEOs will send stuff inside the queues.
+The worker thrads have the info about the procBEOs, the queues and the network.
+They will pick up stuff from the queues, and deliver them to the relevant proc
+BEOs and also will modify the network times accordingly.
+
+*/
+
+
+#ifndef __BEO__
+  #define __BEO__
+  
+  #include "common_definitions"
+  #include<data_structures>
+    
+  namespace smp
+  {
+    //-------------------------Proc BEO-----------------------------------------
+    class procBEO
+    {
+      private: int ID;
+               message m;
+               buffer b;
+               ordered_q *q;
+               TIME_TYPE clock;
+               
+               //For pause resume
+               int    is_paused;
+               sem_t  pause_resume, buffer_access;
+      
+      public : procBEO(){
+                          clock=0;
+                          is_paused=UNPAUSED;
+                          sem_init(&pause_resume ,0,0);
+                          sem_init(&buffer_access,0,1);
+                        }
+               int setup(int ID, ordered_q *q){this->ID=ID; clock=0; this->q=q; return SUCCESS;}
+               
+               //Main program functions (ISA)
+               int send(int,int,int); //Destination, tag, message_size
+               int send_n(int,int,int); //Destination, tag, message_size
+               int recv(int,int); //Source, tag
+               int compute(int); //Compute size
+               int compute_m(int,int); //Compute size, number of computes
+               
+               //Auxuliary functions
+               TIME_TYPE smp_gettime();
+               int write_to_buffer(message m);
+               
+    };
+    
+    
+    
+    //-----------------------------Mesh network---------------------------------
+    class mesh_network
+    {
+      private: int nrows, ncols;
+               TIME_TYPE  **clocks;
+               sem_t      **syncs;
+               int        traffic;
+               
+      public : mesh_network(int nrows, int ncols, int traffic){this->nrows=nrows; this->ncols=ncols; this->traffic=traffic;} //Nrows, Ncols, traffic?
+               
+               //Sync functions
+               int get_lock(int, int); //x, y
+               int release_lock(int,int); //y, y
+               
+               //Status enquiry
+               TIME_TYPE get_clock(int,int);
+               int set_clock(TIME_TYPE,int,int);
+               int get_nrows(){return nrows;}
+               int get_ncols(){return ncols;}
+               bool istraffic(){ return (traffic==YES_TRAFFIC)?true:false;}
+    };
+    
+    
+    
+    
+    //------------------------------Worker threads------------------------------
+    class worker_threads
+    {
+      private: int            worker_id;
+               ordered_q      *q; //A queue
+               procBEO        *procs;  //List of procBEOs
+               mesh_network   *nets;  //List of the networks
+               
+      public : worker_threads();
+               int setup(int,ordered_q*, procBEO*, mesh_network*); //nthreads, queues, procs, nets
+               void execute();  //This is the worker thread function, heart of the entire simulator
+    };
+  }  
+#endif
+
+
+
+
+
+
+
+

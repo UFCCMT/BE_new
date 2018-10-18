@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#IT=1000;
+
+for img_size in "320 240 423" "480 320 207" "640 480 104" "800 600 66" "1024 768 40" "1280 1024 24" "1600 1200 17"
+do
+  set -- $img_size
+  echo "Starting sobel $1x$2"
+
+  tile-monitor \
+	--dev usb1 \
+	--resume \
+	--upload sobel /tmp/cheng/sobel_single/cheng-sobel \
+	--upload-tile-libs m \
+	--cd /tmp/cheng/sobel_single/ \
+	--run -+- /tmp/cheng/sobel_single/cheng-sobel "$1" "$2" "$3" -+- \
+	--quit
+  
+done
+
+
+
+
+
+
+

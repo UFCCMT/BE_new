@@ -1,0 +1,8 @@
+#!/bin/bash
+
+MASTER="$1";
+SLAVE="$2";
+NWORDS="$3";
+
+
+tile-monitor --dev usb1 --resume --here -- ./pattern $MASTER $SLAVE $NWORDS;

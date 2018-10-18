@@ -1,0 +1,162 @@
+
+%-----------------------------------------------------------------------------%
+%------------------------------ SETUP DOCUMENT -------------------------------%
+%-----------------------------------------------------------------------------%
+
+\documentclass [letterpaper, 10pt, notitlepage, fleqn, oneside, 
+  landscape] {article}
+
+\makeatletter
+\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
+\makeatother
+
+%---------------------------- PACKAGE INCLUSION ------------------------------%
+\usepackage[linesnumbered, boxed, commentsnumbered]{algorithm2e}
+\usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage[margin=20pt, indent=10pt, font=small, labelfont=bf]{caption}
+\usepackage[compact]{titlesec}
+
+\usepackage[top=1.0cm, bottom=2.0cm, outer=1.5cm, inner=1.5cm,
+  heightrounded, marginparwidth=4.0cm, marginparsep=0.5cm]{geometry}
+
+%---------------------------- SET UP TITLE TEXT ------------------------------%
+\usepackage{titlesec}
+\usepackage{multicol}
+\titleformat*{\section}{\Large \bf}
+\titleformat*{\subsection}{\large \bf}
+\titleformat*{\subsubsection}{\large}
+\titleformat*{\paragraph}{\large}
+\titleformat*{\subparagraph}{\large}
+
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+
+%----------------------------- PARAGRAPH SETUP -------------------------------%
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4ex}
+\setlength{\columnsep}{2.5ex}
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+    \setlength\abovedisplayskip{1.5ex}
+    \setlength\belowdisplayskip{1.5ex}
+    \setlength\abovedisplayshortskip{1.5ex}
+    \setlength\belowdisplayshortskip{1.5ex}
+}
+
+%------------------------- DEFINE TITLE AND AUTHOR ---------------------------%
+\title{\vspace{-5.0ex} \huge \bf \textsc{
+    Behavioral Emulation -- Reference Simulator
+    } \vspace{-1.5ex} }
+\author{\large \bf \textsc{Dylan Rudolph - \today} }
+\date{\vspace{-6.6ex}}
+
+
+%-----------------------------------------------------------------------------%
+%----------------------------- START DOCUMENT --------------------------------%
+%-----------------------------------------------------------------------------%
+
+\begin{document}
+
+\setlength{\pdfpagewidth}{11in}
+\setlength{\pdfpageheight}{8.5in}
+
+\maketitle
+\rule{\textwidth}{1pt}
+\vspace{-0.50cm}
+\begin{multicols}{2}
+
+  \section{Usage Paradigm}
+
+  At a high level: a piece of software, written in application
+  description language (\texttt{.adl}), is given to the compiler. The
+  compiler uses this to produce a simulator machine code
+  (\texttt{.smc}) file, which can then be used (indirectly) by the
+  simulator.  The simulator is configured with a python script, which,
+  in addition to defining the structure of the simulation, may
+  reference software (\texttt{.smc}) or lookup tables (\texttt{.csv}).
+  The simulator loads this configuration script, and then runs the simulation,
+  and optionally makes output.
+
+  \section{Command-Line Usage}
+
+  Both the simulator and compiler should be used like any other text-based
+  program. That is, by invoking them directly (\texttt{./simulator.py [args]}).
+  There are a number of optional arguments to both programs, outlined below.
+
+  \subsection{Compiler}
+
+  The compiler must be passed one positional argument (the \texttt{.adl} file),
+  and an output file should usually be specified. The suggested command for
+  compiling one of the included examples is:
+
+  \texttt{\quad ./compiler.py input/baby-sw.adl -v -p -o programs/baby.smc}
+
+  Where the \texttt{-v} and \texttt{-p} flags are provided for additional
+  output which may be useful. The full list of flags (available by passing
+  the \texttt{-h} flag) is below:
+
+  \begin{itemize}
+  \item \texttt{-o, -{}-out (output file name [default: out.smc])}
+  \item \texttt{-v, -{}-verbose (verbose command line output)}
+  \item \texttt{-s, -{}-silent (suppress command line output)}
+  \item \texttt{-d, -{}-debug (log intermediate data structures to files)}
+  \item \texttt{-p, -{}-printout (print the output file to console)}
+  \item \texttt{-r, -{}-readable (output a human-readable machine code)}
+  \end{itemize}
+
+  \subsection{Simulator}
+
+  The simulator must be passed one positional argument (the
+  \texttt{.py} configuration file). The suggested command for running one
+  of the included examples is:
+
+  \texttt{\quad ./simulator.py input/baby-sim.py -v}
+
+  A partial list of flags (available by passing the \texttt{-h} flag) is below:
+
+  \begin{itemize}
+  \item \texttt{-o, -{}-output (output simulated times to file)}
+  \item \texttt{-v, -{}-verbose (verbose command line output)}
+  \item \texttt{-s, -{}-silent (suppress command line output)}
+  \item \texttt{-p, -{}-profile (profile the simulator execution)}
+  \item \texttt{-i $\alpha$, -{}-interpolator (specify and interpolation scheme) }
+  \item \texttt{-q, -{}-statistics (print statistics of a multi-run simulation) }
+  \item \texttt{-n $\gamma$, -{}-count (perform the simulation $\gamma$ times) }
+  \item \texttt{-N $\gamma$, -{}-parallel (number of cores for multi-run simulation) }
+
+  \item \texttt{-G $\delta$, -{}-probeGIDs (GIDs to put a probe on) }
+  \item \texttt{-O $\delta$, -{}-probeOrdinals (ordinals to put a probe on) }
+  \item \texttt{-S $\delta$, -{}-probeStates (GIDs of things to watch the state) }
+  \item \texttt{-P $\delta$, -{}-showPrinting (ordinals to allow printing) }
+  \end{itemize}
+
+  Where arguments with:  $\alpha$ indicate string arguments,
+  $\gamma$ indicate integral arguments,
+  and $\delta$ indicate list-of-integral arguments. Some example calls: First,
+  if we wanted to run a 100-run Monte Carlo simulation on a quad-core machine
+  with one of the included examples:
+
+  \texttt{\quad ./simulator.py input/toddler-sim.py -n 100 -N 4 -q -o times.txt}
+
+  This would produce a 100-line file (\texttt{times.txt}) containing the
+  simulated time from each of the 100 runs. If we just wanted to see what
+  was going on inside one of the simulations, we could just watch rank zero
+  with one of the included examples:
+
+  \texttt{\quad ./simulator.py input/toddler-sim.py -v -O 0 -P 0}
+
+  This would view everything that happens in rank 0, and also allow
+  the software print statements of rank zero to go to console.
+
+\end{multicols}
+\end{document}
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+tile-monitor --dev usb1 --resume --here -- ./dot_serial $@
+
+exit 0;

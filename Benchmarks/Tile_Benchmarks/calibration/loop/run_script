@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+IT="$1";
+
+if [ "$IT" = "" ]
+then
+  echo -e "Usage: ./run_script <n_iterations>\n";
+  exit 1
+fi
+
+
+LSIZE=(2 4 8 16 32 64 128 256 512 1000 1024);
+
+for n in ${LSIZE[@]}
+do
+  tile-monitor --dev usb0 --resume --here -- ./loop "$n" "$IT";
+  #echo -e "$n done";
+done

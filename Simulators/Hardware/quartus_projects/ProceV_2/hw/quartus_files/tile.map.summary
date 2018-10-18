@@ -1,0 +1,23 @@
+Analysis & Synthesis Status : Successful - Mon Feb 09 21:31:08 2015
+Quartus II 64-Bit Version : 14.0.0 Build 200 06/17/2014 SJ Full Version
+Revision Name : tile
+Top-level Entity Name : tile
+Family : Stratix V
+Logic utilization (in ALMs) : N/A
+Total registers : 31840
+Total pins : 600
+Total virtual pins : 0
+Total block memory bits : 3,587,504
+Total DSP Blocks : 0
+Total HSSI STD RX PCSs : 9
+Total HSSI 10G RX PCSs : 0
+Total HSSI GEN3 RX PCSs : 0
+Total HSSI PMA RX Deserializers : 8
+Total HSSI STD TX PCSs : 9
+Total HSSI 10G TX PCSs : 0
+Total HSSI GEN3 TX PCSs : 0
+Total HSSI PMA TX Serializers : 9
+Total HSSI PIPE GEN1_2s : 9
+Total HSSI GEN3s : 9
+Total PLLs : 3
+Total DLLs : 1

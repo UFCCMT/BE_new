@@ -1,0 +1,689 @@
+obtain(app.elementsize)
+obtain(app.procsperplane)
+obtain(app.numnodes)
+obtain(app.numelems)
+obtain(mpi.rowMin)
+obtain(mpi.rowMax)
+obtain(mpi.colMin)
+obtain(mpi.colMax)
+obtain(mpi.planeMin)
+obtain(mpi.planeMax)
+obtain(mpi.cartesianZminus)
+obtain(mpi.cartesianZplus)
+obtain(mpi.cartesianYminus)
+obtain(mpi.cartesianYplus)
+obtain(mpi.cartesianXminus)
+obtain(mpi.cartesianXplus)
+
+# LULESH MAIN LOOP BEGINS
+FOR (i,[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+{
+
+call(cpu,Compute1,app.numnodes);
+call(cpu,CalcVolForce,app.numelems);
+#======================================COMMSEND IMPLEMENTATION STARTS======================================================================================
+#========================CommSend(domain, MSG_COMM_SBN, 3, fieldData,domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() +  1,true, false)==============
+#comm(commsend);
+#-----------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN FACE STARTS---------------------------------------------------------------------
+   IF (mpi.planeMin == 1) {
+       indep()
+       comm(send,(app.elementsize + 1) * (app.elementsize + 1)*3,mpi.cartesianZminus , 1)
+   	   begin() 	
+   }
+
+# ELSE NO OP
+   IF (mpi.planeMax == 1) {
+       indep()
+       comm(send,(app.elementsize + 1) * (app.elementsize + 1)*3,mpi.cartesianZplus , 2)
+       begin()  
+   }   
+# ELSE NO OP
+
+
+   IF (mpi.rowMin == 1) {
+       indep()
+       comm(send,(app.elementsize + 1) * (app.elementsize + 1)*3,mpi.cartesianYminus , 3)
+       begin()
+   }
+# ELSE NO OP
+   IF (mpi.rowMax == 1) {
+       indep()
+       comm(send,(app.elementsize + 1) * (app.elementsize + 1)*3,mpi.cartesianZplus , 4)
+       begin()
+   }
+# ELSE NO OP
+
+
+   IF (mpi.colMin == 1) {
+       indep()
+       comm(send,(app.elementsize + 1) * (app.elementsize + 1)*3,mpi.cartesianXminus , 5)
+       begin()
+   }
+# ELSE NO OP
+   IF (mpi.colMax == 1) {
+       indep()
+       comm(send,(app.elementsize + 1) * (app.elementsize + 1)*3,mpi.cartesianXplus , 6)
+       begin()
+   }
+# ELSE NO OP
+
+#-----------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN FACE ENDS-----------------------------------------------------------------------
+
+#-----------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN EDGE STARTS---------------------------------------------------------------------
+
+  IF (mpi.rowMin == 1) {
+	IF (mpi.colMin == 1) {
+	    indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianYminus - 1 ,7)
+		begin()
+	}
+	#ELSE NO OP
+  }
+# ELSE NO OP
+
+  IF (mpi.rowMin == 1) {
+	IF (mpi.planeMin == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianZminus - app.procsperplane , 8 )
+		begin()
+	}
+	# ELSE NO OP
+  }
+# ELSE NO OP
+   
+  IF (mpi.colMin == 1) {
+	IF (mpi.planeMin == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianZminus - 1 ,  9)
+		begin()
+	}
+	#ELSE NO OP
+  }
+# ELSE NO OP
+
+    IF (mpi.rowMax == 1) {
+	IF (mpi.colMax == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianYplus + 1 ,  10)
+		begin()
+	}
+	# ELSE NO OP
+   }
+# ELSE NO OP
+
+  IF (mpi.rowMax == 1) {
+	IF (mpi.planeMax == 1) {
+		indep()
+		comm(send, (app.elementsize + 1)*3,mpi.cartesianZplus + app.procsperplane , 11)
+		begin()
+	}
+	#ELSE NO OP
+  }
+# ELSE NO OP
+
+
+  IF (mpi.colMax == 1) {
+	IF (mpi.planeMax == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianYplus + app.procsperplane ,  12)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+    IF (mpi.rowMax == 1) {
+	IF (mpi.colMin == 1) {	
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianYplus - 1 ,  13)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+  IF (mpi.rowMin == 1) {
+	IF (mpi.planeMax == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3 ,mpi.cartesianZplus - app.procsperplane , 14)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+  IF (mpi.colMin == 1) {
+	IF (mpi.planeMax == 1) {
+	    indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianZplus - 1 ,  15)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP 
+
+  IF (mpi.rowMin == 1) {
+	IF (mpi.colMax == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianYminus + 1 ,  16)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+    IF (mpi.rowMax == 1) {
+	IF (mpi.planeMin == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianZminus + app.procsperplane ,  17)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+  IF (mpi.colMax == 1) {
+	IF (mpi.planeMin == 1) {
+		indep()
+		comm(send,(app.elementsize + 1)*3,mpi.cartesianZminus + 1 ,  18)
+		begin()
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+#-------------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN EDGE ENDS --------------------------------------------------------------
+
+#----------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN CORNER STARTS--------------------------------------------------------------
+
+ IF (mpi.rowMin == 1) {
+	IF (mpi.colMin == 1) {
+		IF (mpi.planeMin == 1) {	
+		    indep()	
+			comm(send,3,mpi.cartesianZminus - app.procsperplane - 1 ,  19)
+			begin()
+		}
+		#ELSE NO OP
+   	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+ IF (mpi.rowMin == 1) {
+	IF (mpi.colMin == 1) {
+		IF (mpi.planeMax == 1) {
+			indep()
+			comm(send,3,mpi.cartesianZplus - app.procsperplane - 1 ,  20)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+   
+ IF (mpi.rowMin == 1) {
+	IF (mpi.colMax == 1) {
+		IF (mpi.planeMin == 1) {		
+			indep()
+			comm(send,3,mpi.cartesianZminus - app.procsperplane + 1 ,  21)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP   
+
+ IF (mpi.rowMin == 1) {
+	IF (mpi.colMax == 1) {
+		IF (mpi.planeMax == 1) {		
+			indep()
+			comm(send,3,mpi.cartesianZplus - app.procsperplane + 1 ,  22)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP 
+
+ IF (mpi.rowMax == 1) {
+	IF (mpi.colMin == 1) {
+		IF (mpi.planeMin == 1) {
+			indep()
+			comm(send,3,mpi.cartesianZminus + app.procsperplane - 1 ,  23)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP 
+
+  IF (mpi.rowMax == 1) {
+	IF (mpi.colMin == 1) {
+		IF (mpi.planeMax == 1) {
+			indep()
+			comm(send,3,mpi.cartesianZplus + app.procsperplane - 1 ,  24)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP 
+
+  IF (mpi.rowMax == 1) {
+	IF (mpi.colMax == 1) {
+		IF (mpi.planeMin == 1) {
+			indep()
+			comm(send,3,mpi.cartesianZminus + app.procsperplane + 1 ,  25)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+   IF (mpi.rowMax == 1) {
+	IF (mpi.colMax == 1) {
+		IF (mpi.planeMax == 1) {
+			indep()
+			comm(send,3,mpi.cartesianZplus + app.procsperplane + 1 ,  26)
+			begin()
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+#----------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN CORNER ENDS---------------------------------------------------------------------     
+
+#====================================COMMSEND IMPLEMENTATION END===========================================================================================
+#==========================================================================================================================================================
+
+
+#====================================COMMSBN IMPLEMENTATION START==========================================================================================
+#====================================CommSBN(domain, 3, fieldData)=========================================================================================
+
+#------------------------------------WAITING FOR MESSAGES ACROSS DOMAIN FACE STARTS------------------------------------------------------------------------
+   IF (mpi.planeMin == 1) {
+
+	call(cpu,NBRecv, (app.elementsize + 1)* (app.elementsize + 1)*3,mpi.cartesianZminus,1)
+   }
+#ELSE NO OP
+   IF (mpi.planeMax == 1) {
+	
+	call(cpu,NBRecv,(app.elementsize + 1)* (app.elementsize + 1)*3,mpi.cartesianZplus,2)
+   }
+#ELSE NO OP
+   IF (mpi.rowMin == 1) {
+
+	call(cpu,NBRecv,(app.elementsize + 1)* (app.elementsize + 1)*3,mpi.cartesianYminus,3)
+   }
+#ELSE NO OP
+   IF (mpi.rowMax == 1) {
+
+	call(cpu,NBRecv,(app.elementsize + 1)* (app.elementsize + 1)*3,mpi.cartesianYplus,4)
+   }
+#ELSE NO OP
+   IF (mpi.colMin == 1) {
+
+	call(cpu,NBRecv,(app.elementsize + 1)* (app.elementsize + 1)*3,mpi.cartesianXminus,5)
+   }
+#ELSE NO OP
+   IF (mpi.colMax == 1) {
+
+	call(cpu,NBRecv,(app.elementsize + 1)* (app.elementsize + 1)*3,mpi.cartesianXplus,6)
+   }
+#ELSE NO OP
+
+#------------------------------WAITING FOR MESSAGES ACROSS DOMAIN FACE ENDS----------------------------------------------------------------------------------
+
+#------------------------------WAITING FOR MESSAGES ACROSS DOMAIN EDGE STARTS--------------------------------------------------------------------------------
+   IF (mpi.rowMin == 1) {
+	
+	IF (mpi.colMin == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianYminus - 1,7)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMin == 1) {
+	
+	IF (mpi.planeMin == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZminus - app.procsperplane,8)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.colMin == 1) {
+	
+	IF (mpi.planeMin == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZminus - 1,9)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMax == 1) {
+	
+	IF (mpi.colMax == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianYplus + 1,10)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMax == 1) {
+	
+	IF (mpi.planeMax == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZplus + app.procsperplane,11)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.colMax == 1) {
+	
+	IF (mpi.planeMax == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianYplus + app.procsperplane ,12)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMax == 1) {
+	
+	IF (mpi.colMin == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianYplus - 1 ,13)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMin == 1) {
+	
+	IF (mpi.planeMax == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZplus - app.procsperplane ,14)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.colMin == 1) {
+	
+	IF (mpi.planeMax == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZplus - 1,15)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMin == 1) {
+	
+	IF (mpi.colMax == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianYminus + 1 ,16)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+   IF (mpi.rowMax == 1) {
+	
+	IF (mpi.planeMin == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZminus + app.procsperplane ,17)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP		
+
+   IF (mpi.colMax == 1) {
+	
+	IF (mpi.planeMin == 1) {
+		
+		call(cpu,NBRecv,(app.elementsize + 1)*3,mpi.cartesianZminus + 1 ,18)
+	}
+	#ELSE NO OP
+  }
+#ELSE NO OP
+
+#------------------------------WAITING FOR MESSAGES ACROSS DOMAIN EDGE ENDS----------------------------------------------------------------
+
+#------------------------------WAITING FOR MESSAGES ACROSS DOMAIN CORNER STARTS-----------------------------------------------------------
+
+  IF (mpi.rowMin == 1) {
+	
+	IF (mpi.colMin == 1) {
+
+		IF (mpi.planeMin == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZminus - app.procsperplane - 1 ,19)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+  IF (mpi.rowMin == 1) {
+	
+	IF (mpi.colMin == 1) {
+
+		IF (mpi.planeMax == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZplus - app.procsperplane - 1 ,20)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+  IF (mpi.rowMin == 1) {
+	
+	IF (mpi.colMax == 1) {
+
+		IF (mpi.planeMin == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZminus - app.procsperplane + 1 ,21)
+		}
+		#ELSE NO OP	
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+  IF (mpi.rowMin == 1) {
+	
+	IF (mpi.colMax == 1) {
+
+		IF (mpi.planeMax == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZplus - app.procsperplane + 1 ,22)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+  IF (mpi.rowMax == 1) {
+	
+	IF (mpi.colMin == 1) {
+
+		IF (mpi.planeMin == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZminus + app.procsperplane - 1 ,23)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+  IF (mpi.rowMax == 1) {
+	
+	IF (mpi.colMin == 1) {
+
+		IF (mpi.planeMax == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZplus + app.procsperplane - 1 ,24)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+  IF (mpi.rowMax == 1) {
+	
+	IF (mpi.colMax == 1) {
+
+		IF (mpi.planeMin == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZminus + app.procsperplane + 1 ,25)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+  IF (mpi.rowMax == 1) {
+	
+	IF (mpi.colMax == 1) {
+
+		IF (mpi.planeMax == 1) {
+
+			call(cpu,NBRecv,3,mpi.cartesianZplus + app.procsperplane + 1 ,26)
+		}
+		#ELSE NO OP
+	}
+	#ELSE NO OP
+ }
+#ELSE NO OP
+
+#------------------------------------WAITING FOR MESSAGES ACROSS DOMAIN CORNER ENDS------------------------------------------------------------------------
+
+#====================================COMMSBN IMPLEMENTATION END============================================================================================
+#==========================================================================================================================================================
+call(cpu,CalcAcceleration,app.numnodes);
+call(cpu,ApplyAccBdyCond,(app.elemsize+1));
+call(cpu,CalcVelocity,app.numnodes);
+call(cpu,CalcPosition,app.numnodes);
+call(cpu,CalcKinematics,app.numelems);
+call(cpu,Compute6,app.numelems);
+call(cpu,CalcMQGradients,app.numelems);
+
+#============================================COMMSEND IMPLEMENTATION START========================================================================================
+#===============CommSend(domain, MSG_MONOQ, 3, fieldData,domain.sizeX(), domain.sizeY(), domain.sizeZ(),true, true)===============================================
+
+#------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN FACE STARTS ----------------------------------------------------
+ 
+   IF (mpi.planeMin == 1) {
+       indep()
+       comm(send,( (app.elementsize ) * ( app.elementsize) * 3 ),mpi.cartesianZminus , 27 )
+   	   begin()	
+   }
+#ELSE NO OP
+   IF (mpi.planeMax == 1) {
+       indep()
+       comm(send,( (app.elementsize ) * ( app.elementsize) * 3 ),mpi.cartesianZplus , 28 )
+   	   begin()	
+   }   
+#ELSE NO OP
+
+
+
+   IF (mpi.rowMin == 1) {
+       indep()
+       comm(send,( (app.elementsize ) * ( app.elementsize) * 3 ),mpi.cartesianYminus , 29 )
+   	   begin()	
+   }
+#ELSE NO OP
+   IF (mpi.rowMax == 1) {
+       indep()
+       comm(send,( (app.elementsize ) * ( app.elementsize) * 3 ),mpi.cartesianZplus , 30 )
+   	   begin()	
+   }
+#ELSE NO OP
+ 
+
+
+   IF (mpi.colMin == 1) {
+       indep()
+       comm(send,( (app.elementsize ) * ( app.elementsize) * 3 ),mpi.cartesianXminus ,31 )
+   	   begin()
+   }
+#ELSE NO OP
+   IF (mpi.colMax == 1) {
+       indep()
+       comm(send,( (app.elementsize ) * ( app.elementsize) * 3 ),mpi.cartesianXplus ,32  )
+   	   begin()	
+   }
+#ELSE NO OP
+
+
+#-----------------------------------------NON-BLOCKING SENDS ACROSS DOMAIN FACE ENDS------------------------------------------------------------------------------
+
+#comm(commsend);
+#============================================COMMSEND IMPLEMENTATION END==========================================================================================
+#=================================================================================================================================================================
+
+#============================================COMMMONOQ IMPLEMENTATION START=======================================================================================
+#=============================================CommMonoQ(domain)===================================================================================================
+
+#------------------------------------WAITING FOR MESSAGES ACROSS DOMAIN FACE STARTS-------------------------------------------------------------------------------
+IF (mpi.planeMin == 1) {
+
+	call(cpu,NBRecv, (app.elementsize)*(app.elementsize)*3,mpi.cartesianZminus,27)
+   }
+#ELSE NO OP
+   IF (mpi.planeMax == 1) {
+	
+	call(cpu,NBRecv,(app.elementsize)*(app.elementsize)*3,mpi.cartesianZplus,28)
+   }
+#ELSE NO OP
+   IF (mpi.rowMin == 1) {
+
+	call(cpu,NBRecv,(app.elementsize)*(app.elementsize)*3,mpi.cartesianYminus,29)
+   }
+#ELSE NO OP
+   IF (mpi.rowMax == 1) {
+
+	call(cpu,NBRecv,(app.elementsize)*(app.elementsize)*3,mpi.cartesianYplus,30)
+   }
+#ELSE NO OP
+   IF (mpi.colMin == 1) {
+
+	call(cpu,NBRecv,(app.elementsize)*(app.elementsize)*3,mpi.cartesianXminus,31)
+   }
+#ELSE NO OP
+   IF (mpi.colMax == 1) {
+
+	call(cpu,NBRecv,(app.elementsize)*(app.elementsize)*3,mpi.cartesianXplus,32)
+   }
+#ELSE NO OP
+
+#------------------------------------WAITING FOR MESSAGES ACROSS DOMAIN FACE ENDS---------------------------------------------------------------------------------
+#comm(commMQ);
+#============================================COMMMONOQ IMPLEMENTATION END=========================================================================================
+call(cpu,CalcMQ,app.numelems);
+call(cpu,Compute7,app.numelems);
+call(cpu,ApplyMaterialProperties,app.numelems);
+call(cpu,UpdateVolumes,app.numelems);
+call(cpu,CalcTimeConstraints,app.numelems);
+
+}

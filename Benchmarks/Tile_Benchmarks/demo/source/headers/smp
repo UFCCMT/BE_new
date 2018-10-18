@@ -1,0 +1,17 @@
+/*
+
+This is the all inclususive header for apps
+
+*/
+
+
+#ifndef __SMP__
+#define __SMP__
+
+  #include<common_definitions>
+  #include<lookup>
+  #include<data_structures>
+  #include<beo>
+  
+
+#endif

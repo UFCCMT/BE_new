@@ -1,0 +1,9 @@
+--------Sobel-----------------
+---Developed for HiperGator---
+
+1. Change sobel.job to accomodate your run. Please see Hipergator wiki for details.
+2. Transfer this whole folder to HiperGator
+3. In hipergator ssh, chmod run_script.sh with +x
+4. make
+5. qsub sobel.job (to submit job)
+6. wait for email for job completion

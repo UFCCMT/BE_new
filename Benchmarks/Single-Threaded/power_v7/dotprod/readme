@@ -1,0 +1,12 @@
+----------dot product (serial)----------
+--------Developed for PowerV7-----------
+---------------Kevin Cheng--------------
+
+This benchmark works by running the python script on a local machine, which will call the c script remotely with sshpass
+
+1. Upload c folder into PowerV7 platform.
+2. Navigate to the folder and make
+3. On your local machine, make sure you have python 2.7 installed with scipy. 
+4. Modify my_shell_script.sh to the correct directory you've used.
+5. Run the python script (python tiledotprod.py)
+6. Outputs will be .bmark for simulator and .csv as record

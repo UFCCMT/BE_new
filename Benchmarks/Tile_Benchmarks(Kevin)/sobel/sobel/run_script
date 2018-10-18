@@ -1,0 +1,39 @@
+#!/bin/bash
+
+
+CONFIG_FILE=(config2 config4 config8 config16 config32);
+IT=1000;
+
+
+
+for n in ${CONFIG_FILE[@]}
+do
+
+for img_size in "320 240" "480 320" "640 480" "800 600" "1024 768" "1280 1024" "1600 1200"
+do
+  set -- $img_size
+  echo "Starting sobel $1x$2"
+
+  tile-monitor \
+	--dev usb0 \
+	--resume \
+	--upload sobel /tmp/cheng/sobel_run/cheng-sobel \
+	--upload $n /tmp/cheng/sobel_run/$n \
+	--upload-tile-libs m \
+	--cd /tmp/cheng/sobel_run/ \
+	--mkdir data \
+	--run -+- /tmp/cheng/sobel_run/cheng-sobel "$n" "$1" "$2" "$IT" "log_$1_$2.csv" -+- \
+	--wait \
+	--download log$n.csv data/log$n.csv \
+	--quit
+  echo -e "$n done\n\n\n";
+done
+
+done
+
+
+touch finished;
+
+
+
+

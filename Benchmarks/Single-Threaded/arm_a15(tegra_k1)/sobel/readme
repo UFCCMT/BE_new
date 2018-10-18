@@ -1,0 +1,9 @@
+----------Sobel (serial)----------
+--------Developed for Tegra K1-----------
+---------------Kevin Cheng--------------
+
+1. Upload folder into Tegra K1 platform.
+2. Navigate to the folder and make
+3. Give run_script.sh execute priviledge (chmod +x run_script.sh)
+5. Run the benchmark with logging (script -c "./run_script.sh" output_file.txt)
+6. Outputs will be within output_file.txt

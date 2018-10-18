@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+CONFIG_FILE="$1";
+IT="$2";
+
+
+if [ "$CONFIG_FILE" = "" ] || [ "IT" = "" ] 
+then
+  echo -e "\nUsage: ./run_script <config file> <iterations> \n";
+  exit 1;
+fi
+
+
+
+if ! [ -e "$CONFIG_FILE" ]
+then
+  echo -e "\nConfig file not found\n";
+  exit 1;
+fi
+
+#n=(64 128 256 512 1024);
+n=5;
+E=4;
+
+for n in ${DATASIZE[@]}
+do
+  tile-monitor --dev usb0 --resume --here --upload-tile-libs m -- ./mm "$1" "$n" "$E" "$IT" "data/log $n.csv";
+  #touch "data/log $n.csv";
+  echo -e "$n done\n\n\n";
+done
+
+
+touch finished;
+
+
+
+

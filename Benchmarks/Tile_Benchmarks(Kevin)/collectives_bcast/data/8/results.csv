@@ -1,0 +1,15 @@
+N = 2,9.42533,thread0 =,994,thread1 =,,thread2 =,1,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 4,9.47403,thread0 =,995,thread1 =,,thread2 =,,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 8,9.47301,thread0 =,995,thread1 =,,thread2 =,,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 16,10.2363,thread0 =,995,thread1 =,,thread2 =,,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 32,12.0314,thread0 =,995,thread1 =,,thread2 =,,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 64,13.5975,thread0 =,320,thread1 =,1,thread2 =,673,thread3 =,1,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 128,21.14,thread0 =,,thread1 =,1,thread2 =,994,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 256,38.4684,thread0 =,,thread1 =,,thread2 =,795,thread3 =,200,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 512,71.2314,thread0 =,,thread1 =,,thread2 =,482,thread3 =,513,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 1024,136.196,thread0 =,,thread1 =,,thread2 =,451,thread3 =,544,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 2048,268.446,thread0 =,,thread1 =,,thread2 =,995,thread3 =,,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 4096,530.331,thread0 =,,thread1 =,,thread2 =,568,thread3 =,426,thread4 =,,thread5 =,,thread6 =,1,thread7 =,
+N = 8192,1056.61,thread0 =,,thread1 =,,thread2 =,764,thread3 =,231,thread4 =,,thread5 =,,thread6 =,,thread7 =,
+N = 16384,2094.75,thread0 =,,thread1 =,,thread2 =,705,thread3 =,288,thread4 =,,thread5 =,,thread6 =,1,thread7 =,1
+N = 32768,4196.07,thread0 =,,thread1 =,,thread2 =,558,thread3 =,433,thread4 =,,thread5 =,,thread6 =,1,thread7 =,3

@@ -1,0 +1,9 @@
+-------------Loop-------------
+---Developed for Tegra K1------
+----------Kevin Cheng---------
+
+2. Transfer this whole folder to Tegra K1 platform
+3. In Tegra K1 ssh, chmod run_loop.sh with +x
+4. make
+5. run benchmark with logging(script -c "./run_loop.sh" output_log_name.txt)
+6. Once done, check the output_log_name.txt for results.

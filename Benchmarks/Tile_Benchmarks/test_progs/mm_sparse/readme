@@ -1,0 +1,9 @@
+Sparse matrix multiply
+---------------------------
+
+Step 1: Initialize marix A and B with random crap (obviously taking care that most of 'em are 0)
+Step 2: Convert the matrix A to CSR and Mattrix B to CSC
+Step 3: Broadcast the A matrix CSR
+Step 4: Scatter the B matrix CSC.
+Step 5: Compute.
+Step 6: Gather the CSC.

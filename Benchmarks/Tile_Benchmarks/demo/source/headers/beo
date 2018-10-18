@@ -1,0 +1,192 @@
+/*
+
+--------------------------------------------------------------------------------
+-----------------------------------BEO------------------------------------------
+--------------------------------------------------------------------------------
+
+About:
+-----------
+This header contains the definitions for the BEOs.
+
+Contents:
+-------------
+1) ProcBEO-
+   This does the processing elements in the program. Basically it exposes a set 
+   of functions that can be used inside a C/C++ program to do stuff. It has-
+   (a)
+*/
+
+
+
+
+
+#ifndef __BEO__
+#define __BEO__
+
+#include<common_definitions>
+#include<data_structures>
+#include<pthread.h>
+
+class procBEO;
+class commBEO;
+
+
+//------------------------------------------------------------------------------
+//-----------------------Lets declare a procBEO---------------------------------
+//------------------------------------------------------------------------------
+
+class procBEO
+{
+  private: //Execution plane
+           int16_t ID;
+           packet p;
+           buffer *b;
+           
+           //MAnagement plane
+           float  last_instr_end_t;
+           shared_memory *shmem;
+             
+  public : procBEO();
+           procBEO(int,buffer*);
+           void setup(int,buffer*);
+           
+           
+           //ISA
+           void init(int);
+           void compute(int);
+           void send(int,int,int); //Destination, tag, msg_size
+           void send_n(int,int,int); //Destination, tag, msg_size
+           void recv(int,int); //Source, tag
+           void compute_m(int,int);
+           float clock_gettime();
+           
+};
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+//------------------------Lets declare a comm BEO-------------------------------
+//------------------------------------------------------------------------------
+
+/*
+
+This a commBEO specialized for a mesh.
+It has specialized routing functions and stuff.
+
+*/
+
+#define FROM_PROC 'A'
+#define FROM_COMM 'B'
+
+#define BUFF_MAX   20
+
+#define EAST  0
+#define WEST  1
+#define NORTH 2
+#define SOUTH 3
+#define UP    4
+#define DOWN  5
+
+typedef
+struct comm_buffer
+{
+  packet buffer[BUFF_MAX+5];
+  char from[BUFF_MAX+5];
+  int head;
+}
+comm_buffer;
+
+typedef
+struct comm_beo_interface
+{
+  int M,N;
+}
+comm_beo_interface;
+
+
+class commBEO
+{
+  private: //Execution plane
+           pipe3 *pipes[4];
+           buffer *b;
+           packet p;
+           int M, N, ID;
+           comm_buffer arrange;
+           
+               
+           //Management plane
+           float  last_transfer_end_time;
+           
+                
+  private: //Private functions
+           void route(int);
+           
+  public : commBEO();
+           commBEO(pipe3**, buffer*, int, comm_beo_interface*); //pipe3s, buffer, ID, interface
+           void setup(pipe3**, buffer*, int,comm_beo_interface*); //pipe3s, buffer, ID, interface
+           void execute(); 
+};
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+//------------------------Lets define a meshBEO---------------------------------
+//------------------------------------------------------------------------------
+
+class meshBEO
+{
+  private: int M,N; //Dimensions
+           procBEO **proc_mesh; //All procBEOs
+           commBEO **comm_mesh; //All commBEOs
+           
+           pipe3 **pipe_rows, **pipe_cols; //All pipes
+           buffer **buff_links; //All buffers
+           
+           pthread_t **comm_threads; //Holds all commBEO threads
+           
+  public : meshBEO(); //Default Constructor
+           meshBEO(int,int); //Dimensioned constructor
+           void setup(int,int); //Post object creation initialization
+           
+           
+           
+           //The Proc functionality exposed
+           int init(int,int);
+           int compute(int,int);
+           int send(int,int,int,int); //Source, Destination, tag, msg_size
+           int send_n(int,int,int,int); //Destination, tag, msg_size
+           int recv(int,int,int); //Source, tag
+           int recv_b(int,int);
+           int compute_m(int,int,int);
+           float smp_clock_gettime(int,struct timespec *st);
+           
+};
+
+
+
+
+
+
+
+
+
+
+
+
+#endif

@@ -1,0 +1,10 @@
+-------------Loop-------------
+---Developed for HiperGator---
+----------Kevin Cheng---------
+
+1. Change loop.job to accomodate your run. Please see Hipergator wiki for details.
+2. Transfer this whole folder to HiperGator
+3. In hipergator ssh, chmod run_loop.sh with +x
+4. make
+5. qsub loop.job (to submit job)
+6. Once done, check the end of loop_log.out for results.

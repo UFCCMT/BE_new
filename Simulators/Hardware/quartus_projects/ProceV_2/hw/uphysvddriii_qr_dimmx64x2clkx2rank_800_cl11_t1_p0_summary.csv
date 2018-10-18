@@ -1,0 +1,42 @@
+Core: uphysvddriii_qr_dimmx64x2clkx2rank_800_cl11_t1_p0 - Instance: IC_1_Bank_B_Ctrl_cmp|multiport|ram|afi_phy_cmp|uphysvddriii_qr_dimmx64x2clkx2rank_800_cl11_t1_inst
+Path, Setup Margin, Hold Margin
+"Address Command (Slow 900mV 85C Model)",0.18,0.191
+"Bus Turnaround Time (Slow 900mV 85C Model)",2.528,--
+"Core (Slow 900mV 85C Model)",0.056,0.151
+"Core Recovery/Removal (Slow 900mV 85C Model)",0.266,0.278
+"Postamble (Slow 900mV 85C Model)",0.151,0.151
+"Read Capture (Slow 900mV 85C Model)",0.068,0.044
+"Read Resync (Slow 900mV 85C Model)",1.247,10.846
+"Write (Slow 900mV 85C Model)",0.074,0.074
+"Write Leveling tDQSS (Slow 900mV 85C Model)",0.082,0.082
+"Write Leveling tDSS/tDSH (Slow 900mV 85C Model)",0.134,0.134
+"Address Command (Slow 900mV 0C Model)",0.222,0.205
+"Bus Turnaround Time (Slow 900mV 0C Model)",2.579,--
+"Core (Slow 900mV 0C Model)",0.206,0.161
+"Core Recovery/Removal (Slow 900mV 0C Model)",0.412,0.267
+"Postamble (Slow 900mV 0C Model)",0.181,0.181
+"Read Capture (Slow 900mV 0C Model)",0.082,0.058
+"Read Resync (Slow 900mV 0C Model)",1.3,10.894
+"Write (Slow 900mV 0C Model)",0.107,0.107
+"Write Leveling tDQSS (Slow 900mV 0C Model)",0.082,0.082
+"Write Leveling tDSS/tDSH (Slow 900mV 0C Model)",0.134,0.134
+"Address Command (Fast 900mV 85C Model)",0.192,0.226
+"Bus Turnaround Time (Fast 900mV 85C Model)",2.719,--
+"Core (Fast 900mV 85C Model)",0.093,0.087
+"Core Recovery/Removal (Fast 900mV 85C Model)",1.088,0.174
+"Postamble (Fast 900mV 85C Model)",0.188,0.188
+"Read Capture (Fast 900mV 85C Model)",0.096,0.072
+"Read Resync (Fast 900mV 85C Model)",1.515,11.145
+"Write (Fast 900mV 85C Model)",0.11,0.11
+"Write Leveling tDQSS (Fast 900mV 85C Model)",0.082,0.082
+"Write Leveling tDSS/tDSH (Fast 900mV 85C Model)",0.134,0.134
+"Address Command (Fast 900mV 0C Model)",0.232,0.217
+"Bus Turnaround Time (Fast 900mV 0C Model)",2.735,--
+"Core (Fast 900mV 0C Model)",0.129,0.078
+"Core Recovery/Removal (Fast 900mV 0C Model)",1.195,0.202
+"Postamble (Fast 900mV 0C Model)",0.15,0.15
+"Read Capture (Fast 900mV 0C Model)",0.103,0.079
+"Read Resync (Fast 900mV 0C Model)",1.513,11.136
+"Write (Fast 900mV 0C Model)",0.124,0.124
+"Write Leveling tDQSS (Fast 900mV 0C Model)",0.082,0.082
+"Write Leveling tDSS/tDSH (Fast 900mV 0C Model)",0.134,0.134

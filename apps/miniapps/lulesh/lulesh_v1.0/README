@@ -1,0 +1,97 @@
+This is the README for updated version of lulesh2.0.3 which is used to log the timing information.
+
+If you have any questions or problems please contact:
+
+Sai Chenna <chenna@hcs.ufl.edu>
+
+The LULESH code is categorised into a series of computation and communication blocks. Multiple sequential computational blocks have been merged into fewer blocks. The Computaitonal and Communication blocks thus categorised as:
+
+ComputeA: It includes the mesh decomposition and Main Data Structure Initialization. 
+ComputeB: It covers the time step calculation
+ComputeC,D,E: Calculates the nodal parameters, like, acceleration,velocity and position of each node and their elements.
+ComputeF,G,H: Calculates the velocity gradient and updates the material indx of each element.
+ComputeI: Calculates the time constraints for the elements.
+
+CommSend: A Communication SubRoutine to send the data to all of its neighbour nodes. It uses an Non Blocking MPI Send
+CommReceive: Subroutine to receive data from all the adjacent nodes. It uses Non Blocking MPI Receive
+CommSBN,CommSyncPosVel,CommMONOQ: Synchronisation Subroutines to ensure the data transfer is completed between a node and its neighbours before proceeding with any data dependent computations. It uses MPI_Wait.
+
+
+========================================================================HOW TO RUN:==================================================================================
+
+1. Build the application.
+2. In order to run the application, enter the following execution command:
+
+	$mpirun -np <# of tasks> ./lulesh2.0 -s <size> -i <# of iterations>
+
+3. Make sure that the number of tasks are always a cube of an integer.  
+4. You can limit the number of iterations with the command line parameter -i [NOTE: THis is an optional parameter]
+5. The Problem size of the application depends on the number of tasks and size defined. The total of elements is equal to the product of number of tasks and size.
+6. After successful execution, the log files are generated in the current working directory for each task in the following format:
+
+	 "rank-<MPI_RANK>-timingreport.txt"
+
+7. The Log file contains the start and end time of compute and communicate blocks in the order of their execution. The format of the timing information is as follows:
+
+	<MPI_RANK>,<BLOCK-NAME>,<start/end>,<TIME>
+
+8. A sample log file for one iteration is shown below:
+
+
+//============================================================LOG-FILE=========================================================================//
+
+0,ComputeA,start,2.52962112426757812500e-04
+0,ComputeA,end,1.46922337924823188782e+09
+0,CommRecv,start,1.46922337924824595451e+09
+0,CommRecv,end,1.46922337924843001366e+09
+0,CommSend,start,1.46922337924843406677e+09
+0,CommSend,end,1.46922337924878597260e+09
+0,CommSBN,start,1.46922337924878907204e+09
+0,CommSBN,end,1.46922337926458907127e+09
+0,MPIBarrier,start,1.46922337926459908485e+09
+0,MPIBarrier,end,1.46922337926737594604e+09
+
+======================ITERATION 1 =====================
+0,ComputeB,start,1.46922337926982402802e+09
+0,ComputeB,end,1.46922337926982593536e+09
+0,ComputeC,start,1.46922337927179193497e+09
+0,ComputeC,end,1.46922337927311897278e+09
+0,CommRecv,start,1.46922337927312588692e+09
+0,CommRecv,end,1.46922337927313208580e+09
+0,ComputeD,start,1.46922337927313399315e+09
+0,ComputeD,end,1.46922337927439808846e+09
+0,CommSend,start,1.46922337927440190315e+09
+0,CommSend,end,1.46922337927444100380e+09
+0,CommSBN,start,1.46922337927444291115e+09
+0,CommSBN,end,1.46922337927466511726e+09
+0,CommRecv,start,1.46922337927568507195e+09
+0,CommRecv,end,1.46922337927569293976e+09
+0,ComputeE,start,1.46922337927569508553e+09
+0,ComputeE,end,1.46922337927572989464e+09
+0,CommSend,start,1.46922337927573204041e+09
+0,CommSend,end,1.46922337927573490143e+09
+0,CommSyncPosVel,start,1.46922337927573704720e+09
+0,CommSyncPosVel,end,1.46922337927590203285e+09
+0,ComputeF,start,1.46922337927662611008e+09
+0,ComputeF,start,1.46922337927783489227e+09
+0,CommRecv,start,1.46922337927784109116e+09
+0,CommRecv,end,1.46922337927784395218e+09
+0,ComputeG,start,1.46922337927784609795e+09
+0,ComputeG,end,1.46922337927799010277e+09
+0,Commsend,start,1.46922337927799201012e+09
+0,Commsend,end,1.46922337927800607681e+09
+0,CommMONOQ,start,1.46922337927800893784e+09
+0,CommMONOQ,end,1.46922337927802801132e+09
+0,ComputeH,start,1.46922337927802991867e+09
+0,ComputeH,end,1.46922337927906990051e+09
+0,ComputeI,start,1.46922337927907800674e+09
+0,ComputeI,end,1.46922337927911305428e+09
+
+
+//======================================================END OF LOG FILE=========================================================//
+
+
+9. In order to check the correctness of your benchmark, make sure that Final Origin Energy is same on multiple runs for the same configuration.
+10. For a help guide, go through LULESH_Summary_v1 document in the main folder.
+
+

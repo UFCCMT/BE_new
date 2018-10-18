@@ -1,0 +1,11 @@
+These are results from hipergator for different number of MPI processes (8,16,32,etc).
+
+The following parameters were used:
+  NStep = 5000
+  IOStep = 5000
+  
+The files have been named based on the number of MPI processes used.
+For example, logfile_16p.txt implies 16 processes have been used.
+
+Rarefaction is the example (or case) used for cmtnek.
+3dbox is the example (or case) used for cmtbone.

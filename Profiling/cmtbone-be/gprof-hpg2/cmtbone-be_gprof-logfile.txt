@@ -1,0 +1,268 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 23.71     21.33    21.33    76800     0.28     0.28  operation_conv
+ 22.42     41.49    20.17    76800     0.26     0.27  operation_ds
+ 21.78     61.09    19.59    76800     0.26     0.26  operation_dt
+ 21.30     80.25    19.16    76800     0.25     0.26  operation_dr
+  5.05     84.79     4.54    76800     0.06     0.06  operation_rk
+  3.32     87.78     2.98    76800     0.04     0.04  operation_sum
+  2.08     89.65     1.87   232969     0.01     0.01  zero_ternix
+  0.32     89.94     0.29       90     3.22     3.22  new_extracted_faces
+  0.08     90.01     0.07                             main
+  0.02     90.03     0.02     2569     0.01     0.01  random_fill_ternix
+  0.00     90.03     0.00     5142     0.00     0.00  delete_ternix
+  0.00     90.03     0.00     5138     0.00     0.00  new_ternix
+  0.00     90.03     0.00     2569     0.00     0.01  new_random_ternix
+  0.00     90.03     0.00     2569     0.00     0.01  new_zero_ternix
+  0.00     90.03     0.00     1024     0.00     0.00  delete_element
+  0.00     90.03     0.00      512     0.00     0.04  new_random_element
+  0.00     90.03     0.00      512     0.00     0.04  new_zero_element
+  0.00     90.03     0.00      180     0.00     0.00  delete_vector
+  0.00     90.03     0.00      180     0.00     0.00  new_vector
+  0.00     90.03     0.00       90     0.00     0.00  new_empty_faces
+  0.00     90.03     0.00        1     0.00     0.00  delete_matrix
+  0.00     90.03     0.00        1     0.00     0.00  new_matrix
+  0.00     90.03     0.00        1     0.00     0.00  new_random_matrix
+  0.00     90.03     0.00        1     0.00     0.00  random_fill_matrix
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.01% of 90.03 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.07   89.96                 main [1]
+               21.33    0.00   76800/76800       operation_conv [2]
+               20.17    0.62   76800/76800       operation_ds [3]
+               19.59    0.62   76800/76800       operation_dt [4]
+               19.16    0.62   76800/76800       operation_dr [5]
+                4.54    0.00   76800/76800       operation_rk [6]
+                2.98    0.00   76800/76800       operation_sum [7]
+                0.29    0.00      90/90          new_extracted_faces [9]
+                0.00    0.02     512/512         new_zero_element [11]
+                0.00    0.02     512/512         new_random_element [14]
+                0.00    0.00       9/2569        new_zero_ternix [10]
+                0.00    0.00       9/2569        new_random_ternix [12]
+                0.00    0.00    1024/1024        delete_element [17]
+                0.00    0.00     180/180         delete_vector [18]
+                0.00    0.00      90/90          new_empty_faces [20]
+                0.00    0.00      22/5142        delete_ternix [15]
+                0.00    0.00       1/1           new_random_matrix [23]
+                0.00    0.00       1/1           delete_matrix [21]
+-----------------------------------------------
+               21.33    0.00   76800/76800       main [1]
+[2]     23.7   21.33    0.00   76800         operation_conv [2]
+-----------------------------------------------
+               20.17    0.62   76800/76800       main [1]
+[3]     23.1   20.17    0.62   76800         operation_ds [3]
+                0.62    0.00   76800/232969      zero_ternix [8]
+-----------------------------------------------
+               19.59    0.62   76800/76800       main [1]
+[4]     22.5   19.59    0.62   76800         operation_dt [4]
+                0.62    0.00   76800/232969      zero_ternix [8]
+-----------------------------------------------
+               19.16    0.62   76800/76800       main [1]
+[5]     22.0   19.16    0.62   76800         operation_dr [5]
+                0.62    0.00   76800/232969      zero_ternix [8]
+-----------------------------------------------
+                4.54    0.00   76800/76800       main [1]
+[6]      5.0    4.54    0.00   76800         operation_rk [6]
+-----------------------------------------------
+                2.98    0.00   76800/76800       main [1]
+[7]      3.3    2.98    0.00   76800         operation_sum [7]
+-----------------------------------------------
+                0.02    0.00    2569/232969      new_zero_ternix [10]
+                0.62    0.00   76800/232969      operation_dr [5]
+                0.62    0.00   76800/232969      operation_ds [3]
+                0.62    0.00   76800/232969      operation_dt [4]
+[8]      2.1    1.87    0.00  232969         zero_ternix [8]
+-----------------------------------------------
+                0.29    0.00      90/90          main [1]
+[9]      0.3    0.29    0.00      90         new_extracted_faces [9]
+                0.00    0.00      90/180         new_vector [19]
+-----------------------------------------------
+                0.00    0.00       9/2569        main [1]
+                0.00    0.02    2560/2569        new_zero_element [11]
+[10]     0.0    0.00    0.02    2569         new_zero_ternix [10]
+                0.02    0.00    2569/232969      zero_ternix [8]
+                0.00    0.00    2569/5138        new_ternix [16]
+-----------------------------------------------
+                0.00    0.02     512/512         main [1]
+[11]     0.0    0.00    0.02     512         new_zero_element [11]
+                0.00    0.02    2560/2569        new_zero_ternix [10]
+-----------------------------------------------
+                0.00    0.00       9/2569        main [1]
+                0.00    0.02    2560/2569        new_random_element [14]
+[12]     0.0    0.00    0.02    2569         new_random_ternix [12]
+                0.02    0.00    2569/2569        random_fill_ternix [13]
+                0.00    0.00    2569/5138        new_ternix [16]
+-----------------------------------------------
+                0.02    0.00    2569/2569        new_random_ternix [12]
+[13]     0.0    0.02    0.00    2569         random_fill_ternix [13]
+-----------------------------------------------
+                0.00    0.02     512/512         main [1]
+[14]     0.0    0.00    0.02     512         new_random_element [14]
+                0.00    0.02    2560/2569        new_random_ternix [12]
+-----------------------------------------------
+                0.00    0.00      22/5142        main [1]
+                0.00    0.00    5120/5142        delete_element [17]
+[15]     0.0    0.00    0.00    5142         delete_ternix [15]
+-----------------------------------------------
+                0.00    0.00    2569/5138        new_zero_ternix [10]
+                0.00    0.00    2569/5138        new_random_ternix [12]
+[16]     0.0    0.00    0.00    5138         new_ternix [16]
+-----------------------------------------------
+                0.00    0.00    1024/1024        main [1]
+[17]     0.0    0.00    0.00    1024         delete_element [17]
+                0.00    0.00    5120/5142        delete_ternix [15]
+-----------------------------------------------
+                0.00    0.00     180/180         main [1]
+[18]     0.0    0.00    0.00     180         delete_vector [18]
+-----------------------------------------------
+                0.00    0.00      90/180         new_extracted_faces [9]
+                0.00    0.00      90/180         new_empty_faces [20]
+[19]     0.0    0.00    0.00     180         new_vector [19]
+-----------------------------------------------
+                0.00    0.00      90/90          main [1]
+[20]     0.0    0.00    0.00      90         new_empty_faces [20]
+                0.00    0.00      90/180         new_vector [19]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[21]     0.0    0.00    0.00       1         delete_matrix [21]
+-----------------------------------------------
+                0.00    0.00       1/1           new_random_matrix [23]
+[22]     0.0    0.00    0.00       1         new_matrix [22]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[23]     0.0    0.00    0.00       1         new_random_matrix [23]
+                0.00    0.00       1/1           new_matrix [22]
+                0.00    0.00       1/1           random_fill_matrix [24]
+-----------------------------------------------
+                0.00    0.00       1/1           new_random_matrix [23]
+[24]     0.0    0.00    0.00       1         random_fill_matrix [24]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [17] delete_element         [14] new_random_element      [5] operation_dr
+  [21] delete_matrix          [23] new_random_matrix       [3] operation_ds
+  [15] delete_ternix          [12] new_random_ternix       [4] operation_dt
+  [18] delete_vector          [16] new_ternix              [6] operation_rk
+   [1] main                   [19] new_vector              [7] operation_sum
+  [20] new_empty_faces        [11] new_zero_element       [24] random_fill_matrix
+   [9] new_extracted_faces    [10] new_zero_ternix        [13] random_fill_ternix
+  [22] new_matrix              [2] operation_conv          [8] zero_ternix

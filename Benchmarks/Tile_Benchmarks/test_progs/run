@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+if [ "$1" = "" ]
+then
+  echo -e "Invalid run file";
+  exit 1;
+fi
+
+tile-monitor --dev usb0 --resume --here -- $@;

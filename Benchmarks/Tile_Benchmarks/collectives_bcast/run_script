@@ -1,0 +1,25 @@
+#!/bin/bash
+
+IT=50;
+CONFIG_FILE="$1";
+
+if [ "$CONFIG_FILE" = "" ]
+then
+  echo "Wrong config file";
+  exit 1;
+fi
+
+
+#DATASIZE=(8192 16384 32768 65536 131072 262144 524288);
+DATASIZE=(64);
+
+for n in ${DATASIZE[@]}
+do
+  tile-monitor --dev usb0 --resume --here --upload-tile-libs m -- ./bcast "$1" "$n" "$IT" "data/log $n.csv";
+  #touch "data/log $n.csv";
+  echo "$n done";
+done
+
+
+
+

@@ -1,0 +1,8 @@
+CMT-bone, CMT-nek and CMT-bone-BE profiling logfiles and images.
+
+This folder also contains the gprof profiling logfiles and the tree graph generated from these logfiles of CMT-bone, CMTbone-be and CMT-NEK that have been run on the lab system.
+
+Rarefaction is the example (or case) used for cmtnek.
+3dbox is the example (or case) used for cmtbone.
+
+They have been tested for 8 MPI processes only.

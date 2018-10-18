@@ -1,0 +1,28 @@
+#!/bin/bash
+
+MSIZE="$1";
+IT="$2";
+
+if [ "$MSIZE" = "" ]
+then
+  echo -e "Invalid matrix size\nUsage: ./run_script <matrix_size> <no. of iterartions>\n";
+  exit 1;
+fi
+
+
+if [ "$IT" = "" ]
+then
+  echo -e "Invalid # of iterations\nUsage: ./run_script <matrix_size> <no. of iterartions>\n";
+  exit 1;
+fi
+
+
+NTHREADS=(2 4 8 9 16 25 32 36);
+
+
+for n in ${NTHREADS[@]}
+do
+  tile-monitor --dev usb1 --resume --here --upload-tile-libs m -- ./mm_udn "$MSIZE" "$n" "$IT" "$n th $MSIZE.csv";
+  #echo "$MSIZE" "$n" "$IT" "$n th $MSIZE.csv";
+  echo "$n";
+done

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+rm finished 2>/dev/null;
+
+while ((1))
+do
+  #Check if execution has finished
+  if [ -e finished ]
+  then
+    echo -e "execution finished" | mail -s 'execution finished on tile' amartya00@gmail.com;
+    exit 0;
+  fi
+  
+  #check if watchdog_file is not there
+  if ! [ -e "watchdog_file" ]
+  then
+    #if not wait for some more time
+    sleep 30;
+    
+    #Check again
+    if ! [ -e "watchdog_file" ]
+    then
+      #This time, send a mail to myself
+      echo -e "This is an automated message. \nTile has usb0 has crashed. Please kill it." | mail -s 'tile crashed'  amartya00@gmail.com;
+      exit 1;
+    fi
+  else
+    #if found, remove the file and start over
+    rm watchdog_file;
+  fi
+  sleep 10;
+done

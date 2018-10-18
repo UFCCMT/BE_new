@@ -1,0 +1,204 @@
+ COMPONENT(Tile)
+ {
+      ic                :   1;
+      hw_path           :   ..\..\Tile\Tile.rbf;
+      sw_path           :   ..\..\Tile\Tile.rbf;
+      hwg_path          :   C:\Users\Krishna\Desktop\Research\Ex_Emulator\ProceV_2\hw;
+
+
+
+    IP_CORE
+    {
+        MEGAFIFO(SingleA)
+        {
+             fifo_type         :   fifo_simple;
+             mem_address_width :   32;
+             mem_data_width    :   64;
+             fifo_size         :   1073741824;
+             clock             :   800.000;
+             mem_block         :   B;
+             sodimm            :   SODIMM_8GB;
+             reset_source      :   Host;
+
+            PORT(src)
+            {
+                 width             :   64;
+                 port_limit_memory :   true;
+                 port_limit_fixed  :   true;
+                 port_lm_mem_size  :   40000000H;
+                 port_lm_init_addr :   0H;
+                 port_access       :   sequential;
+                 port_direction    :   write;
+                 memory_clock      :   false;
+                 empty             :   true;
+                 almost_empty      :   true;
+                 almost_full       :   true;
+                 dimension         :   false;
+                 fixed             :   true;
+                 start             :   0H;
+                 port_ptr          :   true;
+                 port_flush        :   false;
+                 pci_port          :   Not PCI Port;
+                 clk_name          :   clk0;
+                 clk_freq          :   125.000;
+                 clk_pll           :   false;
+                 clk_unit          :   User;
+
+                ENTITY(src)
+                {
+
+                    REGGROUP(reset_singlea)
+                    {
+                         offset            :   300000H;
+                         size              :   4H;
+                         direction         :   out;
+
+                        REGISTER(reset_singlea)
+                        {
+                             from_bit          :   0;
+                             to_bit            :   31;
+                             direction         :   out;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            PORT(dst)
+            {
+                 width             :   256;
+                 port_limit_memory :   true;
+                 port_limit_fixed  :   true;
+                 port_lm_mem_size  :   40000000H;
+                 port_lm_init_addr :   0H;
+                 port_access       :   sequential;
+                 port_direction    :   read;
+                 memory_clock      :   false;
+                 empty             :   true;
+                 almost_empty      :   true;
+                 almost_full       :   true;
+                 dimension         :   false;
+                 fixed             :   true;
+                 start             :   0H;
+                 port_ptr          :   true;
+                 port_flush        :   false;
+                 pci_port          :   PCI Port;
+
+                ENTITY(dst)
+                {
+
+                    MEMORY(singlea_dst)
+                    {
+                         offset            :   300010H;
+                         size              :   10H;
+                         direction         :   in;
+                         mode              :   qdword;
+                         struct_size       :   32;
+                         fifo_inerface     :   true;
+
+                    }
+
+                    REGISTER(status_dst)
+                    {
+                         offset            :   200040H;
+                         from_bit          :   0;
+                         to_bit            :   31;
+                         direction         :   in;
+
+                        FIELD(almost_full_dst)
+                        {
+                             from_bit          :   1;
+                             to_bit            :   1;
+                             from_value        :   0H;
+                             to_value          :   1H;
+                             direction         :   in;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    CLOCK(clk)
+    {
+         main_clk          :   250.000;
+         src               :   PLL;
+         phase             :   0;
+    }
+
+    CLOCK(bank_b_clk)
+    {
+         main_clk          :   800.000;
+    }
+
+    CLOCK(bank_c_clk)
+    {
+         main_clk          :   800.000;
+    }
+
+    ENTITY(User)
+    {
+
+        REGISTER(go)
+        {
+             offset            :   200020H;
+             from_bit          :   0;
+             to_bit            :   0;
+             direction         :   out;
+
+        }
+
+        REGISTER(done)
+        {
+             offset            :   200030H;
+             from_bit          :   0;
+             to_bit            :   0;
+             direction         :   in;
+
+        }
+
+        CLOCK(clk0)
+        {
+        }
+
+    }
+
+    REGISTER(RBF_Info)
+    {
+         offset            :   200000H;
+         from_bit          :   0;
+         to_bit            :   31;
+         direction         :   in;
+         description       :   
+    	 {
+    	   version of RBF
+    	 }
+
+        FIELD(rbf_version)
+        {
+             from_bit          :   0;
+             to_bit            :   7;
+             from_value        :   0H;
+             to_value          :   ffH;
+             direction         :   in;
+
+            VALUE(RBF_VERSION_VAL)
+            {
+                 value             :   1H;
+            }
+
+        }
+
+    }
+
+ }
+

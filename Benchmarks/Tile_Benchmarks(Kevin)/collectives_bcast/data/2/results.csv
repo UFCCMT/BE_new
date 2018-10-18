@@ -1,0 +1,15 @@
+N = 2,8.17059,thread0 =,986,thread1 =,9
+N = 4,8.42794,thread0 =,991,thread1 =,4
+N = 8,8.51905,thread0 =,990,thread1 =,5
+N = 16,8.68277,thread0 =,988,thread1 =,7
+N = 32,9.08871,thread0 =,993,thread1 =,2
+N = 64,10.0643,thread0 =,991,thread1 =,4
+N = 128,12.1043,thread0 =,994,thread1 =,1
+N = 256,16.5815,thread0 =,994,thread1 =,1
+N = 512,24.3915,thread0 =,993,thread1 =,2
+N = 1024,43.0081,thread0 =,995,thread1 =,
+N = 2048,76.1059,thread0 =,993,thread1 =,2
+N = 4096,141.39,thread0 =,995,thread1 =,
+N = 8192,272.34,thread0 =,994,thread1 =,1
+N = 16384,534.627,thread0 =,995,thread1 =,
+N = 32768,1054.07,thread0 =,993,thread1 =,2

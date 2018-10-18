@@ -1,0 +1,5 @@
+# Trivial example:
+
+FOR ( i, [0, 1, 2, 3] ) {
+  call(cpu, fft, 256, 128 * i)
+}

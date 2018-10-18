@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#USAGE: ./run_script datasize iterations
+
+DATASIZE="$1";
+IT="$2";
+
+#backup mount script
+#tile-monitor --dev usb1 --resume --here --upload-tile-libs m -- ./mm_udn "$1" "$n" "$IT" "data/log_$n.csv";
+
+tile-monitor \
+--dev usb0 \
+--resume \
+--upload mm_udn /tmp/cheng/cheng-mm_udn \
+--upload-tile-libs m \
+--cd /tmp/cheng \
+--mkdir data \
+--run -+- /tmp/cheng/cheng-mm_udn "$n" "$IT" "data/log_$n.csv" -+- \
+--wait \
+--download log_$n.csv data/log_$n.csv \
+--quit

@@ -1,0 +1,81 @@
+/*
+
+About:
+------
+Common definitions header
+
+Description:
+-------------
+This file contains all the common macros used accross the entire program.
+It helps to keep all macros unified in 1 file, trust me.
+
+Notes:
+------
+1) In the packet data structure, the flag has the following format:
+Bit   0 means    1 means
+------------------------------
+0     MSG        ACK
+1     BLOCKING   NON BLOCKING
+2     OK         CORRUPT
+3     -          -
+4     -          -
+5     -          - 
+6     -          -
+7     -          -
+-------------------------------
+
+2) If you ever change the FLAG type from char to something else, remember 
+to change the type casting in VALID and INVALID macros as well. These are
+defined in the "Definitions relating to "buffer"" section.
+
+3) DO NOT FORGET to change NDATA, NCOMPDATA when making the linear interpolation 
+table larger.
+
+*/
+
+
+#ifndef __COMMON_DEFINITIONS__
+  #define __COMMON_DEFINITIONS__
+  
+  //Type macros
+  #define SUCCESS             0
+  #define FAILURE             -1
+  #define FLAG_TYPE           char
+  #define TIME_TYPE           float
+  
+  //Definitions relating to "message"
+  #define MSG_ACK             0
+  #define BLOCK               1
+  
+  //Definitions relating to "buffer"
+  #define BUFF_SIZE            10
+  #define VALID                (char)0
+  #define INVALID              (char)1
+  
+  //Definitions relating to interpolation
+  #define NDATA                 20
+  #define NCOMPDATA             9
+  #define PER_HOP_TIME          0
+  #define MSG_PROCESSING_TIME_P 1
+  #define MSG_PROCESSING_TIME_C 2
+  #define INIT_TIME             3
+  #define COMPUTE_TIME          4
+  #define COMPUTE_M_TIME        5
+  #define LATENCY_P_TO_C        6
+  #define LATENCY_C_TO_P        7
+  
+  //Definitions relation to network beo
+  #define YES_TRAFFIC           0
+  #define NO_TRAFFIC            1
+  
+  //Definitions relating to procBEO
+  #define PAUSED                0
+  #define UNPAUSED              1
+  
+#endif
+
+
+
+
+
+

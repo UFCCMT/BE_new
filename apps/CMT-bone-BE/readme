@@ -1,0 +1,10 @@
+Directory for all things CMTbone or CMT-Nek. This includes the latest CMTbone source codes, profiling codes, tests, documentation, profiling and other results etc.
+
+compute-only/	 microkernel benchmarks for compute kernels in cmt-bone-be
+insitu/		 insitu- instrumentation for microbenchmarking of compute kernels in cmt-bone-be
+mpi/		 MPI version of CMT-bone-BE with 
+			compile-time specification of application input parameters 
+			run-time specification of application input parameters
+
+
+06/27/2016 [NK] Separated application parameters into a separate header file.

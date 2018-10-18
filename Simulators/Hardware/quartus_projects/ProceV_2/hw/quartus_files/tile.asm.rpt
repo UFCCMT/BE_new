@@ -1,0 +1,142 @@
+Assembler report for tile
+Mon Feb 09 22:20:50 2015
+Quartus II 64-Bit Version 14.0.0 Build 200 06/17/2014 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Assembler Summary
+  3. Assembler Settings
+  4. Assembler Encrypted IP Cores Summary
+  5. Assembler Generated Files
+  6. Assembler Device Options: C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.sof
+  7. Assembler Device Options: C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.pof
+  8. Assembler Device Options: C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.rbf
+  9. Assembler Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++---------------------------------------------------------------+
+; Assembler Summary                                             ;
++-----------------------+---------------------------------------+
+; Assembler Status      ; Successful - Mon Feb 09 22:20:50 2015 ;
+; Revision Name         ; tile                                  ;
+; Top-level Entity Name ; tile                                  ;
+; Family                ; Stratix V                             ;
+; Device                ; 5SGSMD8K2F40C2                        ;
++-----------------------+---------------------------------------+
+
+
++----------------------------------+
+; Assembler Settings               ;
++--------+---------+---------------+
+; Option ; Setting ; Default Value ;
++--------+---------+---------------+
+
+
++-----------------------------------------------------+
+; Assembler Encrypted IP Cores Summary                ;
++-------------+------------------------+--------------+
+; Vendor      ; IP Core Name           ; License Type ;
++-------------+------------------------+--------------+
+; Altera      ; Signal Tap (6AF7 BCE1) ; Licensed     ;
+; Altera      ; Signal Tap (6AF7 BCEC) ; Licensed     ;
+; Altera      ; Signal Tap (6AF8 BCEC) ; Licensed     ;
+; Gid'el Ltd. ; Unknown (A412 4343)    ; Licensed     ;
+; Gid'el Ltd. ; Unknown (A412 4D50)    ; Licensed     ;
+; Gid'el Ltd. ; Unknown (A412 4D51)    ; Licensed     ;
++-------------+------------------------+--------------+
+
+
++----------------------------------------------------------------------------------+
+; Assembler Generated Files                                                        ;
++----------------------------------------------------------------------------------+
+; File Name                                                                        ;
++----------------------------------------------------------------------------------+
+; C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.sof ;
+; C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.pof ;
+; C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.rbf ;
++----------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Assembler Device Options: C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.sof ;
++----------------+-------------------------------------------------------------------------------------------+
+; Option         ; Setting                                                                                   ;
++----------------+-------------------------------------------------------------------------------------------+
+; Device         ; 5SGSMD8K2F40C2                                                                            ;
+; JTAG usercode  ; 0x0B8FBC7D                                                                                ;
+; Checksum       ; 0x0B8FBC7D                                                                                ;
++----------------+-------------------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Assembler Device Options: C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.pof ;
++--------------------+---------------------------------------------------------------------------------------+
+; Option             ; Setting                                                                               ;
++--------------------+---------------------------------------------------------------------------------------+
+; Device             ; EPCQ128                                                                               ;
+; JTAG usercode      ; 0x00000000                                                                            ;
+; Checksum           ; 0x62AA0E9E                                                                            ;
+; Compression Ratio  ; 3                                                                                     ;
++--------------------+---------------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Assembler Device Options: C:/Users/Krishna/Desktop/Research/Ex_Emulator/ProceV_2/hw/quartus_files/tile.rbf ;
++---------------------+--------------------------------------------------------------------------------------+
+; Option              ; Setting                                                                              ;
++---------------------+--------------------------------------------------------------------------------------+
+; Raw Binary File     ;                                                                                      ;
+;  Compression Ratio  ; 3                                                                                    ;
++---------------------+--------------------------------------------------------------------------------------+
+
+
++--------------------+
+; Assembler Messages ;
++--------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Assembler
+    Info: Version 14.0.0 Build 200 06/17/2014 SJ Full Version
+    Info: Processing started: Mon Feb 09 22:19:08 2015
+Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off tile -c tile
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Warning (15104): Quartus II software detected a bonding design. Reconfiguration is not supported for Bonded designs and MIF is not created for this design.
+Info (115030): Assembler is generating device programming files
+Warning (12914): The file, C:/Gidel/ProcWizard_9.2.1/Gidel_hdl_lib/14.0/pciecore/../../pcie_de_x8_ast256.sopcinfo, is not embedded into sof file as expected.  Some tool, such as SystemConsole, may not function fully.
+Info: Quartus II 64-Bit Assembler was successful. 0 errors, 10 warnings
+    Info: Peak virtual memory: 2373 megabytes
+    Info: Processing ended: Mon Feb 09 22:20:52 2015
+    Info: Elapsed time: 00:01:44
+    Info: Total CPU time (on all processors): 00:01:36
+
+

@@ -1,0 +1,15 @@
+12 templated_functions_MULTI_PAPI_FP_OPS
+# Name Calls Subrs Excl Incl ProfileCalls # <metadata><attribute><name>Metric Name</name><value>PAPI_FP_OPS</value></attribute></metadata>
+".TAU application" 1 1 31 228 0 GROUP="TAU_USER" 
+"int main(int, char **) C [{mpi_hello_world.c} {4,1}-{13,1}]  " 1 4 133 197 0 GROUP="TAU_DEFAULT" 
+".TAU application => int main(int, char **) C [{mpi_hello_world.c} {4,1}-{13,1}]  " 1 4 133 197 0 GROUP="TAU_CALLPATH|TAU_DEFAULT" 
+"MPI_Init()  " 1 0 41 41 0 GROUP="MPI" 
+"int main(int, char **) C [{mpi_hello_world.c} {4,1}-{13,1}]   => MPI_Init()  " 1 0 41 41 0 GROUP="TAU_CALLPATH|MPI" 
+"MPI_Comm_rank()  " 1 0 6 6 0 GROUP="MPI" 
+"int main(int, char **) C [{mpi_hello_world.c} {4,1}-{13,1}]   => MPI_Comm_rank()  " 1 0 6 6 0 GROUP="TAU_CALLPATH|MPI" 
+"MPI_Comm_rank()   [ <comm> = <ranks: 0, 1, 2, 3, 4, 5, 6, 7> <addr=0x6d6c80> ]  " 1 0 6 6 0 GROUP="TAU_PARAM | MPI" 
+"MPI_Comm_size()  " 1 0 6 6 0 GROUP="MPI" 
+"int main(int, char **) C [{mpi_hello_world.c} {4,1}-{13,1}]   => MPI_Comm_size()  " 1 0 6 6 0 GROUP="TAU_CALLPATH|MPI" 
+"MPI_Finalize()  " 1 0 11 11 0 GROUP="MPI" 
+"int main(int, char **) C [{mpi_hello_world.c} {4,1}-{13,1}]   => MPI_Finalize()  " 1 0 11 11 0 GROUP="TAU_CALLPATH|MPI" 
+0 aggregates

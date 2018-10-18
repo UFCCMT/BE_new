@@ -1,0 +1,9 @@
+-------------Loop-------------
+---Developed for PowerV7------
+----------Kevin Cheng---------
+
+2. Transfer this whole folder to PowerV7 platform
+3. In PowerV7 ssh, chmod run_loop.sh with +x
+4. make
+5. run benchmark with logging(script -c "./run_loop.sh" output_log_name.txt)
+6. Once done, check the output_log_name.txt for results.

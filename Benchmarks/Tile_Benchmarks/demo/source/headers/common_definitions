@@ -1,0 +1,56 @@
+/*
+
+--------------------------------------------------------------------------------
+-------------------------------Data structures----------------------------------
+--------------------------------------------------------------------------------
+
+
+About:
+--------------------
+ This header is a collection of all definitions used accross different files.
+ The point of keeping all definitions in one place is easy access
+
+       
+*/
+
+#ifndef __COMMON_DEFINITIONS__
+
+#define __COMMON_DEFINITIONS__
+
+#define _REENTRANT
+
+
+//Type definitions common to all
+#define TIME_TYPE     double
+#define FLAG_TYPE     char
+#define CONTENT_TYPE  int
+#define COUNT_TYPE    int
+
+
+//Data structures related definitions
+//Packet
+#define TAG_MSG       0
+#define TAG_ACK       1
+#define TAG_BARR      2
+#define TAG_USER      3
+
+#define FLAG_BLOCKING 1
+
+//Buffer
+#define BUFFER_SIZE   10
+#define PROC_TO_COMM  (FLAG_TYPE)0
+#define COMM_TO_PROC  (FLAG_TYPE)1
+
+//Pipe3
+#define PIPE_SIZE     10
+#define PIPE_UP       (FLAG_TYPE)1
+#define PIPE_DOWN     (FLAG_TYPE)2
+
+//Stack
+#define STACK_SIZE    5
+
+//BEO related definitions
+//Comm BEO
+#define BUFF_SIZE_COMM 10
+
+#endif

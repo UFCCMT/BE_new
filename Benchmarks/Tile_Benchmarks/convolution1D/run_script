@@ -1,0 +1,41 @@
+#!/bin/bash
+
+
+CONFIG_FILE="$1";
+IT="$2";
+
+
+if [ "$CONFIG_FILE" = "" ] || [ "IT" = "" ] 
+then
+  echo -e "\nUsage: ./run_script <config file> <iterations> \n";
+  exit 1;
+fi
+
+
+
+if ! [ -e "$CONFIG_FILE" ]
+then
+  echo -e "\nConfig file not found\n";
+  exit 1;
+fi
+
+KSIZE=(64 128 256 512 1024);
+SSIZE=(1024 2048 4096 8192 16384 32768);
+#DATASIZE=(1024);
+
+for n in ${KSIZE[@]}
+do
+  for n1 in ${SSIZE[@]}
+  do
+    tile-monitor --dev usb1 --resume --here --upload-tile-libs m -- ./convolution1D "$1"  "$n" "$n1" "$IT" "data/kernel $n signal $n1.csv";
+    #touch "data/log $n.csv";
+    echo -e "$n done\n\n\n";
+  done
+done
+
+
+touch finished;
+
+
+
+

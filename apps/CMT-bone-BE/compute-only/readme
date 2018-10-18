@@ -1,0 +1,10 @@
+Directory for all things CMTbone. This includes the latest CMTbone source codes, profiling codes, tests, documentation, profiling and other results etc.
+
+06/27/2016 [NK] Separated application & machine parameters into a separate header file.
+06/29/2016 [NK] Separated flux functions. Forward looking: particle functions will be maintained in a separate file. Added header guards.
+07/01/2016 [NK] Completed runtime specification of parameters. struct params in declared in params.h
+10/31/2016 [NK] Fine-grained instrumentation (for better modeling) for gathering calibration data
+11/08/2016 [NK] There are six compute operations in the gas flow solver - dr, ds, dt, conv, sum, and rk calculation. 
+                Execution times are for the above operations for a specific ELEMENTS_PER_PROCESSOR and PHYSICAL_PARAMS value.
+                Execution time for each iteration is printed as a new line in csv operations.
+

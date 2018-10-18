@@ -1,0 +1,119 @@
+/*
+
+About:
+------
+
+Data structures header file
+
+Description:
+-------------
+This fle contains class declarations for data structure clases:
+(i)  Ordered queue.
+(ii) Message.
+
+
+Notes:
+--------
+(i) Everything is in the namespace smp. This is to be able to use standard function names without conflict.
+(ii) The time is measured in seconds. This is to deal with cases that the time is so gigantic, it goes out of precession.
+(iii) Note that all comparuson operators except '==' are overloaded for message
+
+
+
+*/
+
+
+#ifndef __DATA_STRUCTURES__
+  #define __DATA_STRUCTURES__
+  
+  #include<iostream>
+  #include<semaphore.h>
+  #include "common_definitions"
+  
+  namespace smp
+  {
+    //---------------------------Message class ---------------------------------
+    class message
+    {
+      public: TIME_TYPE time; 
+              int source, destination,tag; 
+              int message_size;
+              FLAG_TYPE flag;
+              sem_t q_sem;
+           
+      public: message();
+              //Flag manipulation
+              void bit_set(int);
+              void bit_reset(int);
+              bool is_bit_set(int);
+            
+              //Operator overloading
+              bool operator<(message);
+              bool operator>(message);
+              bool operator<=(message);
+              bool operator>=(message);  
+              double operator<<(message);      
+              friend std::ostream &operator<<(std::ostream&, message);
+    };
+    
+    
+  
+    //---------------------------Queue class------------------------------------
+    class ordered_q
+    {
+      private: class node;
+               node *head, *tail;
+               sem_t sync;
+              
+      public : ordered_q(){head=NULL; sem_init(&sync,0,1);}
+               ~ordered_q();
+               int insert(message);
+               int dispatch(message*);
+               int display();
+    };
+  
+    class ordered_q::node
+    {
+      public: message content;
+              node *next, *prev;
+              node(message content){this->content=content;}
+    };
+    
+    
+    
+    //----------------------Buffer class----------------------------------------
+    class buffer
+    {
+      private: message storage[BUFF_SIZE];
+               FLAG_TYPE valid[BUFF_SIZE];
+               int n_storage;
+               
+      public : buffer()
+               {
+                 n_storage=0;
+                 for(int count=0; count<BUFF_SIZE; count++)
+                   valid[count]=INVALID;
+               }
+               
+               int insert(message);
+               int read_msg(int,int,message*); //Source, tag, packet buffer
+               int read_ack(int,message*); //Source, packet buffer
+               void display();             
+    };
+  }
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+

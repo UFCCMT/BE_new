@@ -1,0 +1,48 @@
+//printf("Thread %d: Starting row: %d\tEnding row: %d\n",count, start_addr-1,start_addr+n_out_rows/nthreads+1);
+
+
+
+
+//printf("Thread %d: Starting row: %d\tEnding row: %d\n",count, start_addr-1,start_addr+n_out_rows/nthreads);
+
+
+
+
+
+
+
+
+
+//Display the matrices
+    if(ID<n_out_rows%nthreads)
+    {
+      
+      sleep(ID);
+      printf("Thread %d\n",ID);
+      for(count=0; count<(n_out_rows/nthreads+1+2); count++)
+      {
+        for(count1=0; count1<ncols; count1++)
+        {
+          printf("%d  ",image[count*ncols+count1]);
+        }
+        printf("\n\n");
+      }
+      printf("\n\n\n");
+    }
+    else
+    {
+      
+      sleep(ID);
+      printf("Thread %d\n",ID);
+      for(count=0; count<(n_out_rows/nthreads+2); count++)
+      {
+        for(count1=0; count1<ncols; count1++)
+        {
+          printf("%d  ",image[count*ncols+count1]);
+        }
+        printf("\n\n");
+      }
+      printf("\n\n\n");
+    }
+    
+    

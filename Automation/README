@@ -1,0 +1,19 @@
+Framework Files
+
+Run by:
+	python autogen.py
+
+autogen.py:
+	Main file to run. Uses command line arguments to instantiate the correct classes,
+then uses generic functions to print to the script.
+
+autogenLib.py:
+	Contains the functions for the app and machine. As stated before, autogen calls the
+same functions each time, but defines the class depending on the command line arguments.
+
+autogenSelect.py:
+	-Alternate implementation run without command line arguments, 
+and app/machine are printed out to be selected from.
+
+mpi_examples:
+	Just a folder with mpi matrix multiplication for test

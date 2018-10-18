@@ -1,0 +1,16 @@
+obtain(app.elementcount)
+obtain(app.elementsize)
+obtain(app.alpha)
+obtain(mpi.commRank)
+obtain(mpi.commSize)
+#--------------------------------------------ENTERING CMT-nek PARTICLE SOLVER LOOP-----------------------------------------------------------------------------------
+#usr_particles_solver()
+call(cpu,update_particles_location,app.elementsize,app.elementcount,app.alpha)
+call(cpu,update_particles_position,app.elementsize,app.elementcount,app.alpha)
+call(cpu,Compute1,app.elementsize,app.elementcount,app.alpha)
+call(cpu,crystal_tuple_sort,app.elementsize,app.elementcount,app.alpha)
+call(cpu,interp_props_part_location,app.elementsize,app.elementcount,app.alpha)
+call(cpu,usr_particles_forces,app.elementsize,app.elementcount,app.alpha)
+call(cpu,update_vel_and_pos_bdf,app.elementsize,app.elementcount,app.alpha)
+
+

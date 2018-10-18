@@ -1,0 +1,17 @@
+Script started on Mon 08 Dec 2014 03:51:58 PM UTC
+Starting sobel 320x240
+RUNTIME: 0.00113055;r
+Starting sobel 480x320
+RUNTIME: 0.00160717;r
+Starting sobel 640x480
+RUNTIME: 0.00330240;r
+Starting sobel 800x600
+RUNTIME: 0.00547558;r
+Starting sobel 1024x768
+RUNTIME: 0.01459694;r
+Starting sobel 1280x1024
+RUNTIME: 0.04986557;r
+Starting sobel 1600x1200
+RUNTIME: 0.03003167;r
+
+Script done on Mon 08 Dec 2014 03:53:45 PM UTC

@@ -1,0 +1,321 @@
+		 
+		--*********************************************************************
+		--*  SUBDESIGN  IC_1_Bank_B_Ctrl                                      *
+		--*  Created    :  Fri Jan 23 09:27:18 2015                           *
+		--*********************************************************************
+		
+
+
+
+
+	INCLUDE          "g_hp_mp_dram.inc";
+	INCLUDE          "g_mega_fifo.inc";
+	 
+	--Global Constants
+	CONSTANT  CLK_FREQ              =   800;
+	CONSTANT  MEM_CONTROLLER_MODE   =   "QUARTER_RATE";
+	CONSTANT  BOARD                 =   "DDRIII_SODIMM_4GB";
+	CONSTANT  MEM_WIDTH             =   64;
+	CONSTANT  MEM_ADDR_WIDTH        =   32;
+	
+	
+	
+	 
+	--Port Names
+	CONSTANT  SingleA_src           =   0;
+	CONSTANT  SingleA_dst           =   1;
+	
+	
+	
+	 
+	--Misc. Constants
+	CONSTANT  ADDR_SRC              =   0;
+	CONSTANT  ADDR_BASE_SRC         =   0;
+	CONSTANT  ADDR_DST              =   0;
+	CONSTANT  ADDR_BASE_DST         =   0;
+	
+	
+	SUBDESIGN   IC_1_Bank_B_Ctrl
+	   (
+		 
+		--Global MultiPort Connections
+				clrn                       : INPUT;                    -- MultiPort async global reset
+				ref_clk                    : INPUT;                    -- mem ref clock
+				pll_mem_clk                : INPUT;
+				pll_write_clk              : INPUT;
+				pll_write_clk_pre_phy_clk   : INPUT;
+				pll_addr_cmd_clk           : INPUT;
+				pll_hr_clk                 : INPUT;
+				pll_p2c_read_clk           : INPUT;
+				pll_c2p_write_clk          : INPUT;
+				pll_avl_clk                : INPUT;
+				pll_config_clk             : INPUT;
+				pll_locked                 : INPUT;
+				afi_clk                    : INPUT;
+				afi_half_clk               : INPUT;
+				g_reserved_control[99..0]   : INPUT;                   -- SDRAM Connection
+				ready                      : OUTPUT;                   -- 1: Memory controller is ready for use, 0: Initializing (due to reset)
+		 
+		--SDRAM Connections
+				data[63..0]                : BIDIR;                    -- Memory data
+				addr[15..0]                : OUTPUT;                   -- Memory address
+				dqm[7..0]                  : OUTPUT;                   -- DQM signal from MultiPort
+				dqs[7..0]                  : BIDIR;                    -- DQS signal from MultiPort
+				dqsn[7..0]                 : BIDIR;                    -- DQSN signal from MultiPort
+				ba[2..0]                   : OUTPUT;                   -- SDRAM control signal
+				cs_bus[1..0]               : OUTPUT;                   -- Chip Select signal from MultiPort 4
+				ce[1..0]                   : OUTPUT;                   -- Clock Enable signal from MultiPort
+				ras                        : OUTPUT;                   -- RAS signal from MultiPort
+				cas                        : OUTPUT;                   -- CAS signal from MultiPort
+				we                         : OUTPUT;                   -- Write Enable signal from MultiPort
+				odt[1..0]                  : OUTPUT;                   -- ODT signal from MultiPort
+				ck[1..0]                   : OUTPUT;                   -- CK
+				ckn[1..0]                  : OUTPUT;                   -- CKN
+				oct_rzqin                  : INPUT;                    -- RZK signal from MultiPort
+				event_in                   : INPUT;                    -- event signal from MultiPort
+				mem_reset_n                : OUTPUT;                   -- resetn signal from MultiPort
+		 
+		--Port src of FIFO singlea Connections
+				clk_src                    : INPUT;                    -- Port clock
+				data_src[63..0]            : INPUT;                    -- Data to the port src of FIFO singlea
+				singlea_flush              : INPUT;                    -- Flush FIFO data (assert high when the transfer is over)
+		 
+		--Port dst of FIFO singlea Connections
+				clk_dst                    : INPUT;                    -- Port clock
+				data_dst[255..0]           : OUTPUT;                   -- Data from the port dst of FIFO singlea
+				singlea_almost_full_dst    : OUTPUT;                   -- MultiPort status to Host
+		 
+		--FIFO singlea Connections
+				reset_singlea              : INPUT;                    -- FIFO singlea reset signal
+				lclk                       : INPUT;                    -- FIFO singlea reset signal clock
+				sel_singlea                : INPUT;                    -- FIFO singlea read request from PCI
+				wr_req_singlea             : INPUT;                    -- FIFO singlea write request signal
+				wr_ack_singlea             : OUTPUT;                   -- FIFO singlea write acknowledge signal
+				almost_full_singlea        : OUTPUT;                   -- FIFO singlea almost full signal
+				almost_empty_singlea       : OUTPUT;                   -- FIFO singlea almost empty signal
+				half_full_singlea          : OUTPUT;                   -- FIFO singlea half full signal
+				g_dreq_singlea             : OUTPUT;                   -- DMA transfer hold request from FIFO singlea
+				singlea_eos                : OUTPUT;                   -- 1: singlea port End of Stream pulse
+				singlea_rewind             : INPUT                     -- 1: Start read port from the beginning of the FIFO
+	  )
+	 
+	 
+	 
+	 
+	
+	
+	
+	VARIABLE
+
+	  multiport :g_hp_mp_dram
+
+	  WITH  (
+		CLK_FREQ              = CLK_FREQ,
+		MEM_IF_CS_WIDTH       = 2,
+		MEM_IF_CLK_PAIR_COUNT  = 2,
+		MEM_CONTROLLER_MODE   = MEM_CONTROLLER_MODE,
+		BOARD                 = BOARD,
+		MEM_WIDTH             = MEM_WIDTH,
+		MEM_ADDR_WIDTH        = MEM_ADDR_WIDTH,
+		NUMBER_OF_PORTS       = 2,
+		 
+		--PORT 0 of the MultiPort: SingleA_src
+		PORT_A_WIDTH          = 64,
+		PORT_A_ACCESS         = "SEQUENTIAL",
+		PORT_A_DIRECTION      = "WRITE",
+		PORT_A_ADDR_WIDTH     = 25,
+		
+		 
+		--PORT 1 of the MultiPort: SingleA_dst
+		PORT_B_WIDTH          = 256,
+		PORT_B_ACCESS         = "SEQUENTIAL",
+		PORT_B_DIRECTION      = "READ",
+		PORT_B_ADDR_WIDTH     = 25,
+		
+		 
+		--Unused Ports the MultiPort
+		PORT_C_WIDTH          = 0,
+		PORT_D_WIDTH          = 0,
+		PORT_E_WIDTH          = 0,
+		PORT_F_WIDTH          = 0,
+		PORT_G_WIDTH          = 0,
+		PORT_H_WIDTH          = 0,
+		PORT_I_WIDTH          = 0,
+		PORT_J_WIDTH          = 0,
+		PORT_K_WIDTH          = 0,
+		PORT_L_WIDTH          = 0,
+		PORT_M_WIDTH          = 0,
+		PORT_N_WIDTH          = 0,
+		PORT_O_WIDTH          = 0,
+		PORT_P_WIDTH          = 0 
+	  );
+	
+	
+	SingleA	:    g_mega_fifo
+
+	  WITH  (
+		ADDR_WIDTH            = 25,
+		RD_PORT_TYPE          = "PCI",
+		WR_PORT_TYPE          = "NON_PCI" 
+	  );
+	
+	
+	 
+	-- Internal variables and nodes
+	 
+	mem_clk                    : NODE;
+	multiport_ba[2..0]         : NODE;
+	multiport_cs_bus[7..0]     : NODE;
+	multiport_ce[1..0]         : NODE;
+	singlea_sel_wr             : NODE;
+	singlea_empty_wr           : NODE;
+	singlea_wr_addr[31..0]     : NODE;
+	singlea_sel_rd             : NODE;
+	singlea_empty_rd           : NODE;
+	singlea_almost_empty_rd    : NODE;
+	singlea_rd_addr[31..0]     : NODE;
+	singlea_rd_single_access   : NODE;
+	singlea_rd_preread_en      : NODE;
+	singlea_flush_rd           : NODE;
+	g_dreq_singlea_dst         : NODE;
+	start_rd_singlea           : NODE;
+	start_wr_singlea           : NODE;
+	
+	
+	
+	BEGIN
+	--======================================================================
+	--=                           Logic section                            =
+	--======================================================================
+	
+	mem_clk = multiport.mem_clk_int;
+	 
+	ba[] = multiport_ba[2..0];
+	 
+	cs_bus[1..0] = multiport_cs_bus[1..0];
+	 
+	ce[1..0] = multiport_ce[1..0];
+	
+	
+	
+	--======================================================================
+	--=                        Connection section                          =
+	--======================================================================
+	
+	 
+	--Global MultiPort Connections
+	
+	multiport.clrn                       =  clrn;                              -- MultiPort async global reset
+	multiport.ref_clk                    =  ref_clk;                           -- mem ref clock
+	multiport.pll_mem_clk                =  pll_mem_clk;
+	multiport.pll_write_clk              =  pll_write_clk;
+	multiport.pll_write_clk_pre_phy_clk   =  pll_write_clk_pre_phy_clk;
+	multiport.pll_addr_cmd_clk           =  pll_addr_cmd_clk;
+	multiport.pll_hr_clk                 =  pll_hr_clk;
+	multiport.pll_p2c_read_clk           =  pll_p2c_read_clk;
+	multiport.pll_c2p_write_clk          =  pll_c2p_write_clk;
+	multiport.pll_avl_clk                =  pll_avl_clk;
+	multiport.pll_config_clk             =  pll_config_clk;
+	multiport.pll_locked                 =  pll_locked;
+	multiport.afi_clk                    =  afi_clk;
+	multiport.afi_half_clk               =  afi_half_clk;
+	multiport.g_reserved_control[99..0]   =  g_reserved_control[99..0];        -- SDRAM Connection
+	ready                                =  multiport.ready;                   -- 1: Memory controller is ready for use, 0: Initializing (due to reset)
+	
+	 
+	--SODIMM Connections
+	
+	
+	 
+	--SDRAM Connections
+	
+	multiport.active_cs_mask             =  1;                                 -- SODIMM internal control
+	data[63..0]                          =  multiport.data[63..0];             -- Memory data
+	addr[15..0]                          =  multiport.addr[15..0];             -- Memory address
+	dqm[7..0]                            =  multiport.dqm[7..0];               -- DQM signal from MultiPort
+	dqs[7..0]                            =  multiport.dqs[7..0];               -- DQS signal from MultiPort
+	dqsn[7..0]                           =  multiport.dqsn[7..0];              -- DQSN signal from MultiPort
+	multiport_ba[2..0]                   =  multiport.ba[2..0];                -- SDRAM control signal
+	multiport_cs_bus[7..0]               =  multiport.cs_bus[7..0];            -- Chip Select signal from MultiPort 3
+	multiport_ce                         =  multiport.ce;                      -- Clock Enable signal from MultiPort 3
+	ras                                  =  multiport.ras;                     -- RAS signal from MultiPort
+	cas                                  =  multiport.cas;                     -- CAS signal from MultiPort
+	we                                   =  multiport.we;                      -- Write Enable signal from MultiPort
+	odt                                  =  multiport.odt;                     -- ODT signal from MultiPort 1
+	ck[1..0]                             =  multiport.ck[1..0];                -- CK
+	ckn[1..0]                            =  multiport.ckn[1..0];               -- CKN
+	multiport.oct_rzqin                  =  oct_rzqin;                         -- RZK signal from MultiPort
+	multiport.event_in                   =  event_in;                          -- event signal from MultiPort
+	mem_reset_n                          =  multiport.mem_reset_n;             -- resetn signal from MultiPort
+	
+	
+	
+	 
+	--Ports of the MultiPort
+	
+	
+	 
+	--Port SingleA_src:
+	multiport.clk[SingleA_src]           =  clk_src;
+	multiport.port_a_data_in[63..0] = data_src[63..0];
+	multiport.port_select[SingleA_src]   =  singlea_sel_wr;
+	multiport.port_start[SingleA_src]    =  start_wr_singlea;
+	multiport.port_addr[SingleA_src][]   =  ADDR_SRC;
+	multiport.addr_base[SingleA_src][]   =  ADDR_BASE_SRC;
+	singlea_empty_wr                     =  multiport.empty[SingleA_src];
+	multiport.port_flush[SingleA_src]    =  singlea_flush;
+	singlea_wr_addr[]                    =  multiport.port_internal_addr[SingleA_src][];
+	
+	 
+	--Port SingleA_dst:
+	multiport.clk[SingleA_dst]           =  clk_dst;
+	data_dst[255..0] = multiport.port_b_data_out[255..0];
+	multiport.port_select[SingleA_dst]   =  singlea_sel_rd;
+	multiport.port_start[SingleA_dst]    =  start_rd_singlea;
+	multiport.port_addr[SingleA_dst][]   =  ADDR_DST;
+	multiport.addr_base[SingleA_dst][]   =  ADDR_BASE_DST;
+	singlea_empty_rd                     =  multiport.empty[SingleA_dst];
+	singlea_almost_empty_rd              =  multiport.almost_empty[SingleA_dst];
+	singlea_almost_full_dst              =  multiport.almost_full[SingleA_dst];
+	singlea_rd_addr[]                    =  multiport.port_internal_addr[SingleA_dst][];
+	multiport.port_single_access[SingleA_dst]   =  singlea_rd_single_access;
+	multiport.port_preread_en[SingleA_dst]   =  singlea_rd_preread_en;
+	multiport.port_flush[SingleA_dst]    =  singlea_flush_rd;
+	g_dreq_singlea_dst                   =  multiport.g_dreq[SingleA_dst];
+	
+	 
+	--FIFO SingleA Connections
+	SingleA.clrn                         =  clrn;                              -- Global Reset (active low)
+	SingleA.wr_clk                       =  clk_src;                           -- Write Port Clock
+	SingleA.rd_clk                       =  clk_dst;                           -- Read Port Clock
+	SingleA.mem_clk                      =  mem_clk;                           -- SDRAM clock
+	SingleA.reset                        =  reset_singlea;                     -- FIFO singlea reset signal
+	SingleA.rst_clk                      =  lclk;                              -- FIFO singlea reset signal clock
+	SingleA.g_dreq                       =  g_dreq_singlea_dst;                -- DMA transfer hold request from the port
+	SingleA.rd_req                       =  sel_singlea;                       -- FIFO singlea read request from PCI
+	SingleA.wr_req                       =  wr_req_singlea;                    -- FIFO singlea write request signal
+	wr_ack_singlea                       =  SingleA.wr_ack;                    -- FIFO singlea write acknowledge signal
+	almost_full_singlea                  =  SingleA.almost_full;               -- FIFO singlea almost full signal
+	almost_empty_singlea                 =  SingleA.almost_empty;              -- FIFO singlea almost empty signal
+	half_full_singlea                    =  SingleA.half_full;                 -- FIFO singlea half full signal
+	singlea_sel_wr                       =  SingleA.select_wr;                 -- FIFO singlea control to MultiPort
+	singlea_sel_rd                       =  SingleA.select_rd;                 -- FIFO singlea control to MultiPort
+	SingleA.empty_rd                     =  singlea_empty_rd;                  -- MultiPort status to FIFO singlea
+	SingleA.empty_wr                     =  singlea_empty_wr;                  -- MultiPort status to FIFO singlea
+	singlea_flush_rd                     =  SingleA.flush_rd;                  -- FIFO singlea 1: read all remaining data in stream
+	SingleA.almost_empty_rd              =  singlea_almost_empty_rd;           -- MultiPort status to FIFO singlea
+	SingleA.rd_addr[]                    =  singlea_rd_addr[24..0];            -- MultiPort status to FIFO singlea
+	SingleA.wr_addr[]                    =  singlea_wr_addr[24..0];            -- MultiPort status to FIFO singlea
+	singlea_rd_single_access             =  SingleA.rd_single_access;          -- FIFO singlea control to MultiPort
+	singlea_rd_preread_en                =  SingleA.rd_preread_en;             -- FIFO singlea control to MultiPort
+	g_dreq_singlea                       =  SingleA.f_dreq;                    -- DMA transfer hold request from FIFO singlea
+	SingleA.flush                        =  singlea_flush;                     -- Flush FIFO data (assert high when the transfer is over)
+	singlea_eos                          =  SingleA.eos;                       -- 1: singlea port End of Stream pulse
+	SingleA.rd_rewind                    =  singlea_rewind;                    -- 1: Start read port from the beginning of the FIFO
+	start_rd_singlea                     =  SingleA.start_rd;                  -- FIFO singlea control to MultiPort
+	start_wr_singlea                     =  SingleA.start_wr;                  -- FIFO singlea control to MultiPort
+	
+	END;
+	
+	
+	

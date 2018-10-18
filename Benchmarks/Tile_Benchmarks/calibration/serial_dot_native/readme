@@ -1,0 +1,25 @@
+This is serial dot product
+------------------------------------------------
+
+
+
+Compile: type "make" to compile.
+
+Execute: type "tile-monitor --dev usb0 --resume --here --upload-tile-libs m \
+               -- ./dot_serial <vector_size> <nthreads> <no. of iterations> <output log filename>"
+               
+               64 128 256..... 4096, for a given no. of threads
+         
+         
+Output: The logs are dumped in a logfile you provide, or in case of the automated script, in a file called "nthreads th vsize.csv"
+        For axample 4 threads 1024x1024 vector size will create a file called: 4 th 1024.csv
+        
+
+Notes:  1. The logfile saves the times in every iteration for all threads, because carlo wanted to study 
+           noise in the readings. 
+           
+        2. This program actually distributes the same vector to all the threads and tyhen logs the compute times 
+           for the vector multiplication for all threads in all iterations
+           
+        3. The main vectors are copied into the threads' local memory to avoid shared memory contentions.
+           

@@ -1,0 +1,12 @@
+./mat_mult.o
+1024
+Sending 256 rows to task 1
+Sending 256 rows to task 2
+Sending 256 rows to task 3
+Sending 256 rows to task 4
+Sent all the data!
+Receiving data from task 1
+Receiving data from task 2
+Receiving data from task 3
+Receiving data from task 4
+( 5 )time spent 0.120000 sec

@@ -1,0 +1,175 @@
+/*
+
+--------------------------------------------------------------------------------
+-------------------------------Data structures----------------------------------
+--------------------------------------------------------------------------------
+
+
+About: 
+---------
+This header contains the declarations and macros for different data structures usable.
+
+Contents:
+-----------
+1) Packet- 
+   This is a unit that travells down the network and represents an event
+   It has the following parts:
+   (a) Source ID (of type ID_TYPE)
+   (b) Destination ID (of type ID_TYPE)
+   (c) Tag (of type CONTENT_TYPE)
+   (c) Data size (of type CONTENT_TYPE)
+   (d) Time   (of type TIME_TYPE)
+   (e) A status flag (of tye FLAG_TYPE)
+   
+2) Buffer-
+   This is used for communication - here between proc and comm BEOs
+   It has the following stuff inside it
+   (a) 2 buffers (packet arrays)
+   (b) Semapgores or access to the arrays
+   (c) A status flag
+   (d) Functions including read and write
+   
+3) Pipe3-
+   This is used for communication also - here between different commBEOs
+   It has the following stuff inside it
+   (a) 2 comm channels
+   (b) Semaphores for synchronizing access
+   (C) A status flag
+   (d) Functions including read and write
+   
+   
+Notes:
+----------
+1) The set_property and clear_flag functions are to modify the flags
+2) The difference between pipe3 and buffer is that pipe3 is a fifo while buffer allows random access
+3) The status flags are used for various status maintainence including fault status, etc.
+   
+*/
+
+
+
+
+
+#ifndef __DATA_STRUCTURES__
+
+#define __DATA_STRUCTURES__
+
+
+#include<common_definitions>
+#include<semaphore.h>
+
+//------------------------------------------------------------------------------
+//------------------------Lets declare a packet---------------------------------
+//------------------------------------------------------------------------------
+class packet
+{
+  public: //Packet data
+          CONTENT_TYPE source, destination, tag, message_size;
+          TIME_TYPE time;
+          FLAG_TYPE flag;
+          
+          //Packet functions
+          packet();
+          int  set_property(FLAG_TYPE property);
+          int  clear_flag();
+          void show();
+          
+};
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+//-------------------------Lets declare a buffer--------------------------------
+//------------------------------------------------------------------------------
+
+class buffer
+{
+  private://The buffer
+          packet buff_proc_to_comm[BUFFER_SIZE], buff_comm_to_proc[BUFFER_SIZE];
+          COUNT_TYPE count_proc_to_comm, count_comm_to_proc;
+          
+          //Semaphores
+          sem_t sem_proc_to_comm, sem_comm_to_proc;
+          
+          //Flag
+          FLAG_TYPE flag;
+        
+  public: buffer(); //Size of buffer total size
+          int write(packet*,FLAG_TYPE); //Packet to write, mode
+          int read(packet*,FLAG_TYPE);  //Packet to read, mode
+          int read_anything(packet*);   //Needed by the Comm BEO
+          
+          void set_property(FLAG_TYPE);
+          void clear_glag();
+          void show(FLAG_TYPE);
+};
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+//----------------------------Lets declare a pipe3------------------------------
+//------------------------------------------------------------------------------
+
+class pipe3
+{
+  private: //The comm channels
+           packet pipe_up[PIPE_SIZE], pipe_down[PIPE_SIZE];
+           COUNT_TYPE read_head_up, write_head_up, read_head_down, write_head_down;
+           
+           //Associated semaphores
+           sem_t sem_pipe_up, sem_pipe_down;
+           
+           //Status flag
+           FLAG_TYPE flag;
+            
+  public:  pipe3();
+           int read(packet *,FLAG_TYPE);  //Flag is for specifying which pipe... [:-()]
+           int write(packet *,FLAG_TYPE); //Flag is for specifying which pipe... [:-()]
+         
+           int set_property(FLAG_TYPE);
+           int clear_flag(); 
+           void show(FLAG_TYPE);
+};
+
+
+
+
+//------------------------------------------------------------------------------
+//-----------------------Lets define a shared memory----------------------------
+//------------------------------------------------------------------------------
+class shared_memory
+{
+  private: //For checking completion
+           int16_t completion;
+           sem_t shmem_sem;
+           
+  public:  shared_memory();
+           void increment_completion();
+           int16_t get_completion();
+};
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+

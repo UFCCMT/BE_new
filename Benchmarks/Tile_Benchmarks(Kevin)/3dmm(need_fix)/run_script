@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+CONFIG_FILE=(config2 config4 config8 config16);
+#CONFIG_FILE=(config32);
+IT=1000;
+E=100;
+
+for n in ${CONFIG_FILE[@]}
+do 
+
+#for i in {1..20}
+#do
+
+for dim in 5 10 15 20 25
+#for dim in 5
+do
+  #set -- $dim
+  echo "Starting matrix multiply $n n=$dim E=$E IT=$IT";
+  tile-monitor --dev usb1 --resume --here --upload-tile-libs m -- ./cmt "$n" "$dim" "$E" "$IT" "data/log_$dim$n.csv";
+  echo -e "$n n=$dim done\n\n";
+done
+
+#done
+
+done
+
+
+
+
+

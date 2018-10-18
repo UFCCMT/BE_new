@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+#CONFIG_FILE=(config2 config4 config8 config16 config32);
+CONFIG_FILE=(config8);
+
+
+
+
+for n in ${CONFIG_FILE[@]}
+do
+
+#for img_size in "320 240" "480 320 950" "640 480 350" "800 600 525" "1024 768 225" "1280 1024 90" "1600 1200"
+for img_size in "800 600 775" "1024 768 450" "1280 1024 250"
+do
+  set -- $img_size
+  echo "Starting sobel $1x$2"
+  tile-monitor --dev usb0 --resume --here --upload-tile-libs m -- ./sobel "$n" "$1" "$2" "$3" "log_$1_$2_$n.csv"
+  
+
+  echo -e "$n done\n\n\n";
+
+done
+
+done
+
+
+
+
+exit 0

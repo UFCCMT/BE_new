@@ -1,0 +1,45 @@
+#!/bin/bash
+
+IT=1000;
+CONFIG_FILE="$1";
+
+if [ "$CONFIG_FILE" = "" ]
+then
+  echo "Wrong config file";
+  exit 1;
+fi
+
+DATASIZE=(4096 8192 16384 32768);
+#DATASIZE=(32);
+
+for n in ${DATASIZE[@]}
+do
+  #tile-monitor --dev usb1 --resume --here --upload-tile-libs m -- ./scatter "$1" "$n" "$IT" "data/log $n.csv";
+	#tile-monitor --dev usb1 --resume --upload scatter /tmp/cheng-scatter --upload .config_32th /tmp/cheng-scatter --upload-tile-libs m --cd /tmp --run -+- \
+    #/tmp/cheng-scatter "$1" "$n" "$IT" "log$n.csv" -+- --wait --download log$n.csv data/log$n.csv --quit
+  #touch "data/log $n.csv";
+
+
+
+	tile-monitor \
+	--dev usb1 \
+	--resume \
+	--upload scatter /tmp/cheng/cheng-scatter \
+	--upload $1 /tmp/cheng/config32 \
+	--upload-tile-libs m \
+	--cd /tmp/cheng \
+	--mkdir data \
+	--run -+- /tmp/cheng/cheng-scatter "$1" "$n" "$IT" "log$n.csv" -+- \
+	--wait \
+	--download log$n.csv data/log$n.csv \
+	--quit
+
+
+
+
+  echo "$n done";
+done
+
+
+
+

@@ -1,0 +1,34 @@
+/*
+
+Topic:
+--------
+This header declares the lookup infrastructure.
+
+Description:
+-------------
+This header file has the infrastructure for the lookup approach.
+It declares the lookup function and the variables for the lookup function.
+
+*/                               
+
+
+
+
+
+#ifndef __LOOKUP__
+#define __LOOKUP__
+
+
+//Lookup table definitions
+#define PER_HOP_TIME          0
+#define MSG_PROCESSING_TIME_P 1
+#define MSG_PROCESSING_TIME_C 2
+#define INIT_TIME             3
+#define COMPUTE_TIME          4
+#define LATENCY_P_TO_C        5
+#define LATENCY_C_TO_P        6
+
+
+float lookup(int,int,int); //Time type, arg1, arg2
+
+#endif
