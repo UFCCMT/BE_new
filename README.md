@@ -1,2 +1,2 @@
-BE_new
+Github repo of BE group
 ====
